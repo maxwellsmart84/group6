@@ -91,6 +91,7 @@ public class Main {
 
 
 
+
 /////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) throws SQLException {
@@ -117,6 +118,19 @@ public class Main {
                 })
         );
 
+        Spark.get(
+                "/globalBucket",
+                ((request, response) -> {
+                    try {
+                      JsonSerializer serializer = new JsonSerializer();
+                        String json = serializer.serialize(selectBuckets(conn));
+                        return json;
+                    } catch (Exception e) {
+                    }
+                    return "";
+                })
+        );
+
 
         Spark.post(
                 "/signUp",
@@ -136,6 +150,7 @@ public class Main {
                     return "";
                 })
         );
+
 
 
 
