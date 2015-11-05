@@ -3,13 +3,14 @@ $(document).ready(function () {
 });
 var page= {
   init:function(){
-
+    
   },
   initStyling:function(){
 
 
   },
   initEvents:function(){
+
 
   },
 
