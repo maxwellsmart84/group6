@@ -1,5 +1,7 @@
 package com.theironyard;
 
+import java.util.ArrayList;
+
 /**
  * Created by DrScott on 11/5/15.
  */
@@ -9,6 +11,7 @@ public class User {
     String lastName;
     String email;
     String password;
+    ArrayList<String> bucketList;
 
     public int getId() {
         return id;
@@ -30,12 +33,13 @@ public class User {
         return password;
     }
 
+    public ArrayList<String> getBucketList() {return bucketList;}
+
     public User(int id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-
         this.password = password;
     }
     public User(){}

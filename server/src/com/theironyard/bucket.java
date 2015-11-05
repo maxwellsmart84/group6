@@ -7,5 +7,4 @@ public class bucket {
     String text;
     Boolean isDone;
     int id;
-
 }

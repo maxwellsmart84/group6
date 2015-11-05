@@ -1,5 +1,6 @@
 package com.theironyard;
 
+import jodd.json.JsonSerializer;
 import spark.Spark;
 
 import java.sql.*;
@@ -10,7 +11,7 @@ public class Main {
 
     public static void createTables (Connection conn) throws SQLException {
         Statement stmt = conn.createStatement();
-       // stmt.execute("CREATE TABLE IF NOT EXISTS buckets (id IDENTITY, text VARCHAR, is_done BOOLEAN)");
+        stmt.execute("CREATE TABLE IF NOT EXISTS buckets (id IDENTITY, text VARCHAR, is_done BOOLEAN)");
         stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, firstName VARCHAR, lastName VARCHAR, email VARCHAR, " +
                 "password VARCHAR)");
     }
@@ -38,14 +39,15 @@ public class Main {
         }
         return user;
     }
-  /*  public static User selectUser(Connection conn) throws SQLException {
+    public static User selectUser(Connection conn) throws SQLException {
         return selectUser(conn, 0);
     }
+
     public static ArrayList<User> selectUsers (Connection conn) {
         ArrayList<User> users = new ArrayList();
 
         return  users;
-    } */
+    }
 
 
 
@@ -66,25 +68,46 @@ public class Main {
         insertUser(conn, "max", "to the", "email", "123455");*/
 
 
-           Spark.post(
-                         "/signUp",
-                         ((request, response) -> {
-                             String firstName = request.queryParams("firstName");
-                             String lastName = request.queryParams("lastName");
-                             String email = request.queryParams("email");
-                             String password = request.queryParams("password");
-                             String id = request.queryParams("id");
-                             try {
-                              int idNum = Integer.valueOf(id);
-                                 //User user = new User(idNum, firstName, lastName, email, password);
-                                 insertUser(conn, firstName, lastName, email, password);
-                                 //selectUser(conn, idNum);
-                             } catch (Exception e) {
-                             }
-                              //response.redirect("/");
-                             return "";
-                         })
-                 );
+        Spark.get(
+                "/getUser",
+                ((request, response) -> {
+                    String id = request.queryParams("id");
+                    try {
+                        int idNum = Integer.valueOf(id);
+                        JsonSerializer serializer = new JsonSerializer();
+                        String json = serializer.serialize(selectUser(conn, idNum));
+                        return json;
+                    } catch (Exception e) {
+                    }
+                    return "";
+                })
+        );
+
+
+        Spark.post(
+                "/signUp",
+                ((request, response) -> {
+                    String firstName = request.queryParams("firstName");
+                    String lastName = request.queryParams("lastName");
+                    String email = request.queryParams("email");
+                    String password = request.queryParams("password");
+                    String id = request.queryParams("id");
+                    try {
+                        int idNum = Integer.valueOf(id);
+                        //User user = new User(idNum, firstName, lastName, email, password);
+                        insertUser(conn, firstName, lastName, email, password);
+                        //selectUser(conn, idNum);
+                    } catch (Exception e) {
+                    }
+                    //response.redirect("/");
+                    return "";
+                })
+        );
+
+
+
+
+
 
 
 

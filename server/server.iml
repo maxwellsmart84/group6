@@ -10,5 +10,6 @@
     <orderEntry type="library" name="com.sparkjava:spark-core:2.3" level="project" />
     <orderEntry type="library" name="junit:junit:4.8.1" level="project" />
     <orderEntry type="library" name="com.h2database:h2:1.4.190" level="project" />
+    <orderEntry type="library" name="org.jodd:jodd-json:3.6.6" level="project" />
   </component>
 </module>
