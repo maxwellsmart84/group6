@@ -11,7 +11,6 @@ public class User {
     String lastName;
     String email;
     String password;
-    ArrayList<String> bucketList;
 
     public int getId() {
         return id;
@@ -32,8 +31,6 @@ public class User {
     public String getPassword() {
         return password;
     }
-
-    public ArrayList<String> getBucketList() {return bucketList;}
 
     public User(int id, String firstName, String lastName, String email, String password) {
         this.id = id;

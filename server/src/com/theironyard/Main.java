@@ -43,6 +43,47 @@ public class Main {
         return selectUser(conn, 0);
     }
 
+    /*
+    public static Game selectGame (Connection conn, int id) throws SQLException{
+        Game game = null;
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM games INNER JOIN users ON  games.user_id = " +
+                "users.id WHERE games.id = ?");
+        stmt.setInt(1, id);
+        ResultSet results = stmt.executeQuery();
+        if (results.next()){
+            game = new Game();
+            game.id = results.getInt("games.id");
+            game.title = results.getString("games.title");
+            game.username = results.getString("users.name");
+            game.system = results.getString("games.system");
+        }
+        return game;
+    }
+     */
+
+    static void insertBucket(Connection conn, String text) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ?, false)"); //causes identity to auto incremnent
+        stmt.setString(1, text);
+        stmt.execute();
+    }
+
+
+    static ArrayList<Bucket> selectBuckets(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet results = stmt.executeQuery("SELECT * FROM buckets");
+        ArrayList<Bucket> buckets = new ArrayList();
+        while (results.next()){
+            int id = results.getInt("id");
+            String text = results.getString("text");
+            Boolean isDone = results.getBoolean("is_done");
+            Bucket listItem = new Bucket(id, text, isDone);
+            buckets.add(listItem);
+        }
+        return buckets;
+    }
+
+
+
 
 
 
@@ -84,10 +125,9 @@ public class Main {
                     String lastName = request.queryParams("lastName");
                     String email = request.queryParams("email");
                     String password = request.queryParams("password");
-                    String id = request.queryParams("id");
+                    //String id = request.queryParams("id");
                     try {
-                        int idNum = Integer.valueOf(id);
-                        //User user = new User(idNum, firstName, lastName, email, password);
+                       // int idNum = Integer.valueOf(id);
                         insertUser(conn, firstName, lastName, email, password);
                         //selectUser(conn, idNum);
                     } catch (Exception e) {
