@@ -43,11 +43,7 @@ public class Main {
         return selectUser(conn, 0);
     }
 
-    public static ArrayList<User> selectUsers (Connection conn) {
-        ArrayList<User> users = new ArrayList();
 
-        return  users;
-    }
 
 
 
@@ -62,10 +58,7 @@ public class Main {
         Spark.externalStaticFileLocation("public");
         Spark.init();
 
-        //test to fill table
-       /* insertUser(conn, "doug", "scott", "douscott2", "1234");
-        insertUser(conn, "frank", "frank's last name", "franke email", "12345");
-        insertUser(conn, "max", "to the", "email", "123455");*/
+
 
 
         Spark.get(
