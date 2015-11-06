@@ -1,21 +1,23 @@
 package com.theironyard;
 
 import jodd.json.JsonSerializer;
+import spark.Session;
 import spark.Spark;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Main {
 
+    // create tables
     public static void createTables (Connection conn) throws SQLException {
         Statement stmt = conn.createStatement();
-        stmt.execute("CREATE TABLE IF NOT EXISTS buckets (id IDENTITY, text VARCHAR, is_done BOOLEAN)");
+        stmt.execute("CREATE TABLE IF NOT EXISTS buckets (id IDENTITY, userId INT, text VARCHAR, isDone BOOLEAN)");
         stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, firstName VARCHAR, lastName VARCHAR, email VARCHAR, " +
                 "password VARCHAR)");
+     //   stmt.execute("CREATE TABLE IF NOT EXISTS userBuckets (id IDENTITY, userId INT, text VARCHAR, isDone BOOLEAN)");
     }
-
+    //create new user for /signUp
     public static void insertUser(Connection conn, String firstName, String lastName, String email, String password) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO users VALUES (NULL, ?,?,?,?)");
         stmt.setString(1, firstName );
@@ -25,9 +27,10 @@ public class Main {
         stmt.execute();
     }
 
-    public static User selectUser(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
-        stmt.setInt( 1 , id);
+    //select 1 user info
+    public static User selectUser(Connection conn, String userName) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE email = ?");
+        stmt.setString( 1 , userName);
         User user = new User();
         ResultSet results = stmt.executeQuery();
         if (results.next()){
@@ -39,56 +42,95 @@ public class Main {
         }
         return user;
     }
-    public static User selectUser(Connection conn) throws SQLException {
-        return selectUser(conn, 0);
-    }
 
-    /*
-    public static Game selectGame (Connection conn, int id) throws SQLException{
-        Game game = null;
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM games INNER JOIN users ON  games.user_id = " +
-                "users.id WHERE games.id = ?");
+    //remove user (just in case)
+
+    //adds row for new bucket in buckets table
+    static void insertBucket(Connection conn, int id, String text) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ? , ?, false)"); //causes identity to auto incremnent
+        stmt.setInt(1, id);
+        stmt.setString(2, text);
+        stmt.execute();
+    }
+    //insert bucket into only user bucket
+   /* static void insertUserBucket (Connection conn, int id, String text) throws SQLException{
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO userBuckets VALUES (NULL, ?, ?, false)");
+        stmt.setInt(1, id);
+        stmt.setString(2, text);
+        stmt.execute();
+    }*/
+
+    //pulls a bucket from buckets made by user
+    public static Bucket selectBucket (Connection conn, int id) throws SQLException{
+        Bucket bucket = null;
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM buckets INNER JOIN users ON " +
+                        "buckets.userId = users.id WHERE buckets.userId = ?");
         stmt.setInt(1, id);
         ResultSet results = stmt.executeQuery();
         if (results.next()){
-            game = new Game();
-            game.id = results.getInt("games.id");
-            game.title = results.getString("games.title");
-            game.username = results.getString("users.name");
-            game.system = results.getString("games.system");
+            bucket = new Bucket();
+            bucket.id = results.getInt("buckets.id");
+            bucket.text = results.getString("buckets.text");
+            bucket.isDone= results.getBoolean("buckets.isDone");
         }
-        return game;
-    }
-     */
-
-    static void insertBucket(Connection conn, String text) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ?, false)"); //causes identity to auto incremnent
-        stmt.setString(1, text);
-        stmt.execute();
+        return bucket;
     }
 
+    //select random bucket
+    public static Bucket selectRandomBucket (Connection conn) throws SQLException{
+        Statement stmt = conn.createStatement();
+        Bucket bucket = null;
 
-    static ArrayList<Bucket> selectBuckets(Connection conn) throws SQLException {
+       ResultSet results = stmt.executeQuery("SELECT * FROM buckets ORDER BY RAND() LIMIT 1");
+        if (results.next()){
+            bucket = new Bucket();
+            bucket.isDone = false;
+            bucket.id = results.getInt("id");
+            bucket.text = results.getString("text");
+        }
+        return bucket;
+    }
+
+
+
+    //select all buckets for globalBucket
+    static ArrayList<Bucket> selectAllBuckets(Connection conn) throws SQLException {
         Statement stmt = conn.createStatement();
         ResultSet results = stmt.executeQuery("SELECT * FROM buckets");
         ArrayList<Bucket> buckets = new ArrayList();
         while (results.next()){
             int id = results.getInt("id");
             String text = results.getString("text");
-            Boolean isDone = results.getBoolean("is_done");
-            Bucket listItem = new Bucket(id, text, isDone);
-            buckets.add(listItem);
+            Boolean isDone = results.getBoolean("isDone");
+            Bucket bucket = new Bucket(id, text, isDone);
+            buckets.add(bucket);
+        }
+        return buckets;
+    }
+    //pulls all buckets posted by a specific user
+    static ArrayList<Bucket> selectUserBuckets(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM buckets WHERE userId = ?");
+        stmt.setInt(1, id);
+        ResultSet results = stmt.executeQuery();
+        //stmt.setInt
+        ArrayList<Bucket> buckets = new ArrayList();
+        while (results.next()){
+            int idNum = results.getInt("id");
+            String text = results.getString("text");
+            Boolean isDone = results.getBoolean("isDone");
+            Bucket bucket = new Bucket(idNum, text, isDone);
+            buckets.add(bucket);
         }
         return buckets;
     }
 
 
-
-
-
-
-
-
+    //removes bucket from table buckets
+    public static void removeBucket (Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM buckets WHERE id = ?");
+        stmt.setInt(1, id);
+        stmt.execute();
+    }
 
 
 
@@ -99,18 +141,39 @@ public class Main {
         createTables(conn);
         Spark.externalStaticFileLocation("public");
         Spark.init();
+        //testing stuffs
+      insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
+        insertBucket(conn, 1, "I want to see the world");
+        insertBucket(conn, 1, "This is my second dream");
+        insertUser(conn, "Rob", "Pearce", "BobbyP@gmail.com", "passphrase");
+        insertBucket(conn, 2, "This is robert's dream");
 
 
-
-
+        Spark.post(
+                "/login",
+                ((request, response) -> {
+                    String username = request.queryParams("username");
+                    String password = request.queryParams("password");
+                    if (username.isEmpty() || password.isEmpty()) {
+                        Spark.halt(403);
+                    }
+                    User user = selectUser(conn, username);
+                    if (!password.equals(user.password)) {
+                        Spark.halt(403);
+                    }
+                    Session session = request.session();
+                    session.attribute("username", username);
+                    response.redirect("/");
+                    return "";
+                })
+        );
         Spark.get(
                 "/getUser",
                 ((request, response) -> {
-                    String id = request.queryParams("id");
+                    String userName = request.queryParams("userName");
                     try {
-                        int idNum = Integer.valueOf(id);
                         JsonSerializer serializer = new JsonSerializer();
-                        String json = serializer.serialize(selectUser(conn, idNum));
+                        String json = serializer.serialize(selectUser(conn, userName));
                         return json;
                     } catch (Exception e) {
                     }
@@ -123,7 +186,7 @@ public class Main {
                 ((request, response) -> {
                     try {
                       JsonSerializer serializer = new JsonSerializer();
-                        String json = serializer.serialize(selectBuckets(conn));
+                        String json = serializer.serialize(selectAllBuckets(conn));
                         return json;
                     } catch (Exception e) {
                     }
@@ -131,6 +194,47 @@ public class Main {
                 })
         );
 
+        Spark.get(
+                "/userBucket",
+                ((request, response) -> {
+                    String id = request.queryParams("id");
+                    try {
+                        int idNum = Integer.valueOf(id);
+                        JsonSerializer serializer = new JsonSerializer();
+                        String json = serializer.serialize(selectUserBuckets(conn, idNum));
+                        return json;
+                    } catch (Exception e) {
+
+                    }
+                    return "";
+                })
+        );
+
+        Spark.get(
+                "/removeBucket",
+                ((request1, response1) -> {
+                    String id = request1.queryParams("id");
+                    try {
+                    int idNum = Integer.valueOf(id);
+                        removeBucket(conn, idNum);
+                    } catch (Exception e) {
+
+                    }
+                    return "";
+                })
+        );
+        Spark.get(
+                "/randomBucket",
+                ((request1, response1) -> {
+                    try {
+                    JsonSerializer serializer = new JsonSerializer();
+                        String json = serializer.serialize(selectRandomBucket(conn));
+                        return json;
+                    } catch (Exception e) {
+                    }
+                    return "";
+                })
+        );
 
         Spark.post(
                 "/signUp",
@@ -141,7 +245,7 @@ public class Main {
                     String password = request.queryParams("password");
                     //String id = request.queryParams("id");
                     try {
-                       // int idNum = Integer.valueOf(id);
+                        // int idNum = Integer.valueOf(id);
                         insertUser(conn, firstName, lastName, email, password);
                         //selectUser(conn, idNum);
                     } catch (Exception e) {
@@ -150,25 +254,6 @@ public class Main {
                     return "";
                 })
         );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
