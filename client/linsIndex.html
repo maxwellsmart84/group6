@@ -10,12 +10,17 @@
     <script type="text/html" id="buketTmpl">
       <article data-id="<%=id%>">
         <div class="col-lg-10">
-        <h4><%=buket%></h4>
+        <h4><%=bucket%></h4>
         <button class="delete">delete</button>
       </article>
-
     </script>
 
+    <script type="text/html" id="bucketTmplCurrUser">
+      <article class="col-lg-10" data-index="<%= _id %>" style="margin: 0;">
+        <h4 style="font-weight: bold;"><%= userName %></h4>
+        <button type="button" style="padding-top: 5px; border: 2px solid #2B80F7; background-color: #f8f8f8; border-radius: 3px; font-family: 'Special Elite', cursive;" class="btn-group btn-group-xs delete">Delete&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-trash"></button>  
+      </article>
+    </script>
 
   </head>
   <body>

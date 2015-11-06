@@ -32,6 +32,20 @@ var page= {
         }
       });
     },
+    loadBucket: function(data) {
+      var bucketHTML = "";
+      _.each(data.reverse(), function (currVal, idx, arr) {
+        if (currVal.userName === page.currentUser){
+          var bucketTemplateCurrUser = _.template($('#bucketTmplCurrUser').html());
+          bucketHTML += bucketTemplateCurrUser(currVal);
+        } else {
+          var bucketTemplate = _.template($('#bucketTmpl').html());
+          bucketHTML += bucketTemplate(currVal);
+
+      }
+    });
+  $('h4').html(bucketHTML);
+  },
 
   grabBucketsFromServer: function() {
     $.ajax({
@@ -62,6 +76,9 @@ var page= {
         console.log("FAILURE", resp);
       }
     });
+  },
+  setUser: function(name){
+    page.currentUser = name;
   },
 
 
