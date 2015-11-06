@@ -134,12 +134,11 @@ public class Main {
         Spark.externalStaticFileLocation("public");
         Spark.init();
         //testing stuffs
-     /* insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
+        insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
         insertBucket(conn, 1, "I want to see the world");
         insertBucket(conn, 1, "This is my second dream");
         insertUser(conn, "Rob", "Pearce", "BobbyP@gmail.com", "passphrase");
-        insertBucket(conn, 2, "This is robert's dream");*/
-
+        insertBucket(conn, 2, "This is robert's dream");
 
         Spark.post(
                 "/login",
