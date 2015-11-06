@@ -86,8 +86,20 @@ public class MainTest {
         Bucket bucket = Main.selectRandomBucket(conn);
         endConnection(conn);
         assertTrue(bucket != null);
-
     }
+   /* @Test
+    public void testDeleteUser() throws SQLException{
+        Connection conn = startConnection();
+        Main.insertUser(conn, "Alice", "Cooper", "aCooper@gmail.com", "password");
+        Main.insertBucket(conn, 1, "I want to climb Mt. Everest.");
+        Main.insertBucket(conn, 1, "I want to climb Mt. Everest a second time.");
+        Main.insertBucket(conn, 1, "I want to climb Mt. Kilimanjaro.");
+        Main.insertUser(conn, "bob", "pearce", "bp@gmail", "passwerd");
+        Main.insertBucket(conn, 2, "I'm bob");
+        Main.deleteUser(conn, 1);
+        endConnection(conn);
+        assertTrue(Main.selectUser(conn, "aCooper@gmail.com")== null);
+    }*/
 
 
 }
