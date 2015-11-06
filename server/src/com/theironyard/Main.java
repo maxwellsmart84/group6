@@ -15,7 +15,6 @@ public class Main {
         stmt.execute("CREATE TABLE IF NOT EXISTS buckets (id IDENTITY, userId INT, text VARCHAR, isDone BOOLEAN)");
         stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, firstName VARCHAR, lastName VARCHAR, email VARCHAR, " +
                 "password VARCHAR)");
-     //   stmt.execute("CREATE TABLE IF NOT EXISTS userBuckets (id IDENTITY, userId INT, text VARCHAR, isDone BOOLEAN)");
     }
     //create new user for /signUp
     public static void insertUser(Connection conn, String firstName, String lastName, String email, String password) throws SQLException {
@@ -44,6 +43,11 @@ public class Main {
     }
 
     //remove user (just in case)
+    public static void deleteUser(Connection conn, int id) throws SQLException{
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM users WHERE id = ?");
+        stmt.setInt(1, id);
+        stmt.execute();
+    }
 
     //adds row for new bucket in buckets table
     static void insertBucket(Connection conn, int id, String text) throws SQLException {
@@ -52,13 +56,6 @@ public class Main {
         stmt.setString(2, text);
         stmt.execute();
     }
-    //insert bucket into only user bucket
-   /* static void insertUserBucket (Connection conn, int id, String text) throws SQLException{
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO userBuckets VALUES (NULL, ?, ?, false)");
-        stmt.setInt(1, id);
-        stmt.setString(2, text);
-        stmt.execute();
-    }*/
 
     //pulls a bucket from buckets made by user
     public static Bucket selectBucket (Connection conn, int id) throws SQLException{
@@ -91,8 +88,6 @@ public class Main {
         return bucket;
     }
 
-
-
     //select all buckets for globalBucket
     static ArrayList<Bucket> selectAllBuckets(Connection conn) throws SQLException {
         Statement stmt = conn.createStatement();
@@ -124,15 +119,12 @@ public class Main {
         return buckets;
     }
 
-
     //removes bucket from table buckets
     public static void removeBucket (Connection conn, int id) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM buckets WHERE id = ?");
         stmt.setInt(1, id);
         stmt.execute();
     }
-
-
 
 /////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,11 +134,11 @@ public class Main {
         Spark.externalStaticFileLocation("public");
         Spark.init();
         //testing stuffs
-      insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
+     /* insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
         insertBucket(conn, 1, "I want to see the world");
         insertBucket(conn, 1, "This is my second dream");
         insertUser(conn, "Rob", "Pearce", "BobbyP@gmail.com", "passphrase");
-        insertBucket(conn, 2, "This is robert's dream");
+        insertBucket(conn, 2, "This is robert's dream");*/
 
 
         Spark.post(
