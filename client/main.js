@@ -3,15 +3,20 @@ $(document).ready(function () {
 });
 var page= {
   init:function(){
-    
+    page.initEvents();
+    page.initStyling();
+
+
   },
   initStyling:function(){
-
+    page.videBackground();
 
   },
   initEvents:function(){
-
+    page.videBackground();
 
   },
+
+
 
 };

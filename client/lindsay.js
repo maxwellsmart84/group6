@@ -32,6 +32,18 @@ var page= {
         }
       });
     },
+    createNewBitter: function() {
+      var bucketText = $('form > input[name="bucket"]').val();
+      var newBucket = {
+        bucket: bucketText
+      };
+      console.log("NEW bucket", newBucket)
+
+      page.sendBucketsToServer(newBucket);
+      // sendBucketsToServer
+
+    },
+
     loadBucket: function(data) {
       var bucketHTML = "";
       _.each(data.reverse(), function (currVal, idx, arr) {
@@ -50,7 +62,7 @@ var page= {
   grabBucketsFromServer: function() {
     $.ajax({
       type: 'GET',
-      url: '/userBuckets',
+      url: '/userBucket',
       success: function(data) {
         console.log("SUCCESS: ", data);
         bucketData = JSON.parse(data);
@@ -64,7 +76,7 @@ var page= {
   sendBucketsToServer: function(bucket) {
     console.log("IN TRANSIT", bucket);
     $.ajax({
-      url: '/userBuckets',
+      url: '/userBucket',
       method: 'POST',
       data: bucketData,
       success: function(resp) {
