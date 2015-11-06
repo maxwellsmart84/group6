@@ -32,12 +32,12 @@ var page= {
         }
       });
     },
-    createNewBitter: function() {
+    createNewBucket: function() {
       var bucketText = $('form > input[name="bucket"]').val();
       var newBucket = {
         bucket: bucketText
       };
-      console.log("NEW bucket", newBucket)
+      // console.log("NEW bucket", newBucket)
 
       page.sendBucketsToServer(newBucket);
       // sendBucketsToServer
@@ -64,19 +64,19 @@ var page= {
       type: 'GET',
       url: '/userBucket',
       success: function(data) {
-        console.log("SUCCESS: ", data);
+        console.log("SUCCESSSSSSSSSSSSSSSSSSS: ", data);
         bucketData = JSON.parse(data);
-        page.loadBucket(data);
+        // page.loadBucket(data);
       },
       failure: function(data) {
-        console.log("FAILURE: ", data);
+        // console.log("FAILURE: ", data);
       }
     });
   },
   sendBucketsToServer: function(bucket) {
-    console.log("IN TRANSIT", bucket);
+    // console.log("IN TRANSIT", bucket);
     $.ajax({
-      url: '/userBucket',
+      url: '/insertBucket',
       method: 'POST',
       data: bucketData,
       success: function(resp) {
@@ -85,7 +85,7 @@ var page= {
 
       },
       failure: function(resp) {
-        console.log("FAILURE", resp);
+        // console.log("FAILURE", resp);
       }
     });
   },
