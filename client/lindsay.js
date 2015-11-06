@@ -21,17 +21,7 @@ var page= {
       var tmpl = page.getTemplate(name);
       return tmpl(val);
   },
-  getUser: function(){
-      $.ajax({
-        url: '/getUser',
-        method: 'GET',
-        success: function(data){
-          userData = JSON.parse(data);
-          page.loadTemplate($(''), userData, $('#userTmpl').html());
 
-        }
-      });
-    },
     createNewBucket: function() {
       var bucketText = $('form > input[name="bucket"]').val();
       var newBucket = {
@@ -44,28 +34,16 @@ var page= {
 
     },
 
-    loadBucket: function(data) {
-      var bucketHTML = "";
-      _.each(data.reverse(), function (currVal, idx, arr) {
-        if (currVal.userName === page.currentUser){
-          var bucketTemplateCurrUser = _.template($('#bucketTmplCurrUser').html());
-          bucketHTML += bucketTemplateCurrUser(currVal);
-        } else {
-          var bucketTemplate = _.template($('#bucketTmpl').html());
-          bucketHTML += bucketTemplate(currVal);
 
-      }
-    });
-  $('h4').html(bucketHTML);
-  },
 
   grabBucketsFromServer: function() {
     $.ajax({
       type: 'GET',
-      url: '/userBucket',
+      url: '/globalBucket',
       success: function(data) {
         console.log("SUCCESSSSSSSSSSSSSSSSSSS: ", data);
         bucketData = JSON.parse(data);
+        console.log(JSON.parse(data))
         // page.loadBucket(data);
       },
       failure: function(data) {
@@ -73,25 +51,23 @@ var page= {
       }
     });
   },
-  sendBucketsToServer: function(bucket) {
-    // console.log("IN TRANSIT", bucket);
-    $.ajax({
-      url: '/insertBucket',
-      method: 'POST',
-      data: bucketData,
-      success: function(resp) {
-        var htmlForArticle = page.loadTemplate('#bucketTmpl',resp);
-        $('h4').prepend(htmlForArticle);
+  // sendBucketsToServer: function(bucket) {
+  //   // console.log("IN TRANSIT", bucket);
+  //   $.ajax({
+  //     url: '/insertBucket',
+  //     method: 'POST',
+  //     data: bucketData,
+  //     success: function(resp) {
+  //       var htmlForArticle = page.loadTemplate('#bucketTmpl',resp);
+  //       $('h4').prepend(htmlForArticle);
+  //
+  //     },
+  //     failure: function(resp) {
+  //       // console.log("FAILURE", resp);
+  //     }
+  //   });
+  // },
 
-      },
-      failure: function(resp) {
-        // console.log("FAILURE", resp);
-      }
-    });
-  },
-  setUser: function(name){
-    page.currentUser = name;
-  },
 
 
 };
