@@ -172,6 +172,21 @@ public class Main {
                     return "";
                 })
         );
+         Spark.post(
+                         "/insertBucket",
+                         ((request, response) -> {
+                             String id = request.queryParams("id");
+                             String text = request.queryParams("text");
+                             try {
+                                 int idNum = Integer.valueOf(id);
+                                 insertBucket(conn, idNum, text);
+                             } catch (Exception e) {
+                             }
+                             response.redirect("/");
+                             return "";
+                         })
+
+                 );
 
         Spark.get(
                 "/globalBucket",
