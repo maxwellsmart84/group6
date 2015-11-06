@@ -131,6 +131,7 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
         String doug = "doug";
+        String test = "test;";
         Connection conn = DriverManager.getConnection("jdbc:h2:./main");
         createTables(conn);
         Spark.externalStaticFileLocation("client");
