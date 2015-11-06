@@ -25,4 +25,5 @@ public class Bucket {
         this.text = text;
         this.isDone = isDone;
     }
+    public Bucket (){}
 }
