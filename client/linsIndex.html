@@ -7,27 +7,22 @@
     <link href="jumbotron-narrow.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" media="screen" title="no title" charset="utf-8">
 
-    <script type="text/html" id="activityTmpl">
+    <script type="text/html" id="buketTmpl">
       <article data-id="<%=id%>">
-        <span class="status"></span>
-        <section><%=item%></section><form class="edit-form invisible"><input class="edit" type="text" name="editActivity" value="<%=item%>"></input></form>
+        <div class="col-lg-10">
+        <h4><%=buket%></h4>
         <button class="delete">delete</button>
       </article>
 
     </script>
-    <script type="text/html" id="completeActivityTmpl">
-      <article data-id="<%=id%>">
-        <span class="status">&#10003;</span>
-        <section class="strikethrough"><%=item%></section><form class="edit-form invisible"><input class="edit" type="text" name="editActivity" value="<%=item%>"></input></form>
-        <button class="delete">delete</button>
-      </article>
-    </script>
+
+
   </head>
   <body>
     <div class="jumbotron">
       <h1>Bucket List</h1>
       <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-      <p><a class="btn btn-lg btn-success" href="#" role="button">Get Activity</a></p>
+      <p><a class="btn btn-lg btn-success" href="#" role="button">Get Bucket</a></p>
     </div>
     <div class="container fluid">
       <div class="row">
@@ -40,7 +35,7 @@
         </div>
 
         <div class="col-lg-10">
-          <h4>Title of Activity</h4>
+          <h4>Title of Bucket</h4>
         </div>
 
         <div class="col-lg-1">
@@ -57,9 +52,9 @@
 <!-- lib files -->
   <script src="bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
   <script src="bower_components/underscore/underscore.js" charset="utf-8"></script>
-  <script src="js/jquery.vide.min.js"></script>
+  <!-- <script src="js/jquery.vide.min.js"></script> -->
 
 <!-- app files -->
-  <script src="main.js" charset="utf-8"></script>
+  <script src="lindsay.js" charset="utf-8"></script>
   </body>
 </html>

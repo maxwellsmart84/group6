@@ -8,7 +8,7 @@ var page= {
   },
   initStyling:function(){
     page.getUser();
-    page.grabActivityFromServer();
+    page.grabBucketFromServer();
 
   },
   initEvents:function(){
@@ -33,51 +33,30 @@ var page= {
       });
     },
 
-  loadActivity : function(arr){
-    _.each(arr, function(currVal, idx, arr){
-    //maintains the same ID regardless of view
-      if(arr === page.activityList){
-      currVal.id = idx;
-    }
-    else{
-      currVal.id = _.filter(page.activityList, function(obj){
-        return obj.item === currVal.item;})[0].id;
-    }
-
-      if(currVal.status ==="Active"){
-      page.loadTemplate($('.activity-section'), currVal, $('#activityTmpl').html());
-    }
-    else{
-        toDo.loadTemplate($('.activity-section'), currVal, $('#completeActivityTmpl').html());
-
-        }
-      });
-    },
-
-  grabActivityFromServer: function() {
+  grabBucketsFromServer: function() {
     $.ajax({
       type: 'GET',
-      url: '/getActivity',
+      url: '/userBuckets',
       success: function(data) {
         console.log("SUCCESS: ", data);
-        activityData = JSON.parse(data);
-        page.loadActivity(data);
+        bucketData = JSON.parse(data);
+        page.loadBucket(data);
       },
       failure: function(data) {
         console.log("FAILURE: ", data);
       }
     });
   },
-  sendActivityToServer: function(activity) {
-    console.log("IN TRANSIT", activity);
+  sendBucketsToServer: function(bucket) {
+    console.log("IN TRANSIT", bucket);
     $.ajax({
-      url: '/getActivity',
+      url: '/userBuckets',
       method: 'POST',
-      data: activityData,
+      data: bucketData,
       success: function(resp) {
-        var htmlForArticle = page.loadTemplate('#activityTmpl',resp);
-        $('.activity').prepend(htmlForArticle);
-        $('form > input[type="text"]').val('');
+        var htmlForArticle = page.loadTemplate('#bucketTmpl',resp);
+        $('h4').prepend(htmlForArticle);
+
       },
       failure: function(resp) {
         console.log("FAILURE", resp);
