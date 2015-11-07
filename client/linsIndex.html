@@ -4,23 +4,9 @@
     <meta charset="utf-8">
     <title>Group 6</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="jumbotron-narrow.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" media="screen" title="no title" charset="utf-8">
-
-    <!-- <script type="text/html" id="buketTmpl">
-      <article data-id="<%=id%>">
-        <div class="col-lg-10">
-        <h4><%=bucket%></h4>
-        <button class="delete">delete</button>
-      </article>
-    </script>
-
-    <script type="text/html" id="bucketTmplCurrUser">
-      <article class="col-lg-10" data-index="<%= _id %>" style="margin: 0;">
-        <h4 style="font-weight: bold;"><%= userName %></h4>
-        <button type="button" style="padding-top: 5px; border: 2px solid #2B80F7; background-color: #f8f8f8; border-radius: 3px; font-family: 'Special Elite', cursive;" class="btn-group btn-group-xs delete">Delete&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-trash"></button>
-      </article>
-    </script> -->
 
   </head>
   <body>
@@ -31,42 +17,48 @@
     </div>
     <div class="container fluid">
       <div class="row">
-        <div class="col-lg-1">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox">
-            </label>
-          </div>
-        </div>
+        <div class="col-lg-1"></div>
+        <!--left side column empty-->
 
-        <div class="col-lg-10">
-          <h4>Title of Bucket</h4>
-        </div>
+        <div class="col-lg-12">
+          <div class="list">
+            <!--New Bucket List Item-->
+            <div class="top">
+              <form action="" class="createItem">
+                <input type="text" class="newListItem" name="newTitle" placeholder="Add Bucket List Item">
+                <button type= "submit" id="submitBtn" class="btn btn-primary">Add Item</button>
+              </form>
+            </div>
+            <!--End Bucket List Inputs-->
 
-        <div class="col-lg-1">
-          <button class="btn btn-default" type="submit">Button</button>
-        </div>
-      </div>
+            <!-- Bucket list tasks -->
+            <div class="itemList">
+              <section class="inputs">
+                <!-- Bucket list items here -->
+              </section>
 
-      <div class="bucket">
-      <form>
-        <input type="text" name="text" value="" placeholder="What do you want to add to your bucket list?">
-        <button type="submit" name="submit">Submit</button>
-      </form>
-      </div>
+            </div> <!-- end itemList -->
+          </div> <!--end list-->
+        </div> <!--end col-lg-10-->
+
+        <div class="col-lg-1"></div>
+        <!--right side column empty-->
+      </div> <!--End row-->
 
       <footer class="footer">
         <p>&copy; Company 2015</p>
       </footer>
-    </div> <!-- /container -->
+    </div> <!--end container -->
 
 
 <!-- lib files -->
   <script src="bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
   <script src="bower_components/underscore/underscore.js" charset="utf-8"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <!-- <script src="js/jquery.vide.min.js"></script> -->
 
 <!-- app files -->
   <script src="lindsay.js" charset="utf-8"></script>
+  <script src="template.js"></script>
   </body>
 </html>
