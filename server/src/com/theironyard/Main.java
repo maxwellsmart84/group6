@@ -27,9 +27,9 @@ public class Main {
     }
 
     //select 1 user info
-    public static User selectUser(Connection conn, String userName) throws SQLException {
+    public static User selectUser(Connection conn, String email) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE email = ?");
-        stmt.setString( 1 , userName);
+        stmt.setString( 1 , email);
         User user = new User();
         ResultSet results = stmt.executeQuery();
         if (results.next()){
@@ -131,9 +131,10 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
         String doug = "doug";
+        String test = "test;";
         Connection conn = DriverManager.getConnection("jdbc:h2:./main");
         createTables(conn);
-        Spark.externalStaticFileLocation("public");
+        Spark.externalStaticFileLocation("client");
         Spark.init();
         //testing stuffs
         insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
@@ -163,10 +164,10 @@ public class Main {
         Spark.get(
                 "/getUser",
                 ((request, response) -> {
-                    String userName = request.queryParams("userName");
+                    String email = request.queryParams("email");
                     try {
                         JsonSerializer serializer = new JsonSerializer();
-                        String json = serializer.serialize(selectUser(conn, userName));
+                        String json = serializer.serialize(selectUser(conn, email));
                         return json;
                     } catch (Exception e) {
                     }
@@ -174,20 +175,19 @@ public class Main {
                 })
         );
          Spark.post(
-                         "/insertBucket",
-                         ((request, response) -> {
-                             String id = request.queryParams("id");
-                             String text = request.queryParams("text");
-                             try {
-                                 int idNum = Integer.valueOf(id);
-                                 insertBucket(conn, idNum, text);
-                             } catch (Exception e) {
-                             }
-                             response.redirect("/");
-                             return "";
-                         })
-
-                 );
+                 "/insertBucket",
+                 ((request, response) -> {
+                     String id = request.queryParams("id");
+                     String text = request.queryParams("text");
+                     try {
+                         int idNum = Integer.valueOf(id);
+                         insertBucket(conn, idNum, text);
+                     } catch (Exception e) {
+                     }
+                     response.redirect("/");
+                     return "";
+                 })
+         );
 
         Spark.get(
                 "/globalBucket",
