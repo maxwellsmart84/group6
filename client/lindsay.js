@@ -34,8 +34,8 @@ var page = {
   $('.createItem').on('submit', function(event){
       event.preventDefault();
         var newItem = {
-          title: $(this).find('input[name="newTitle"]').val(),
-          complete: false,
+          text: $(this).find('input[name="newTitle"]').val(),
+          isDone: false,
 
         };
       page.createItem(newItem);
