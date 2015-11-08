@@ -16,6 +16,7 @@ public class Main {
         stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, firstName VARCHAR, lastName VARCHAR, email VARCHAR, " +
                 "password VARCHAR)");
     }
+
     //create new user for /signUp
     public static void insertUser(Connection conn, String firstName, String lastName, String email, String password) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO users VALUES (NULL, ?,?,?,?)");
@@ -24,6 +25,17 @@ public class Main {
         stmt.setString(3, email);
         stmt.setString(4, password);
         stmt.execute();
+    }
+    public static void editUser(Connection conn, int id, String firstName, String lastName, String email, String password) throws SQLException{
+        PreparedStatement stmt = conn.prepareStatement("UPDATE users SET firstName = ?, lastName = ?, email = ?, password = ?" +
+                "  WHERE id = ?");
+        stmt.setInt(5, id);
+        stmt.setString(1, firstName );
+        stmt.setString(2, lastName);
+        stmt.setString(3, email);
+        stmt.setString(4, password);
+
+
     }
 
     //select 1 user info
@@ -102,6 +114,12 @@ public class Main {
         }
         return buckets;
     }
+    public static void setDone(Connection conn, int id) throws SQLException{
+        PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = TRUE WHERE id = ?");
+        stmt.setInt(1, id);
+        stmt.execute();
+    }
+
     //pulls all buckets posted by a specific user
     static ArrayList<Bucket> selectUserBuckets(Connection conn, int id) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM buckets WHERE userId = ?");
@@ -126,10 +144,8 @@ public class Main {
         stmt.execute();
     }
 
-/////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) throws SQLException {
-
         String doug = "doug";
         String test = "test;";
         Connection conn = DriverManager.getConnection("jdbc:h2:./main");
@@ -137,11 +153,19 @@ public class Main {
         Spark.externalStaticFileLocation("client");
         Spark.init();
         //testing stuffs
-        insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
-        insertBucket(conn, 1, "I want to see the world");
-        insertBucket(conn, 1, "This is my second dream");
-        insertUser(conn, "Rob", "Pearce", "BobbyP@gmail.com", "passphrase");
-        insertBucket(conn, 2, "This is robert's dream");
+
+      /*  insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
+        insertBucket(conn, 1, "I want to see the world-DS");
+        insertBucket(conn, 1, "I will climb Mt. Kilimanjaro.-DS");
+        insertUser(conn, "Bruce", "Willis", "bruce.willis@gmail.com", "passphrase");
+        insertBucket(conn, 2, "I will hang out with Doug one day. -BW ");
+        insertUser(conn, "Erik", "Schneider", "eSchnei@gmail.com", "passcode");
+        insertBucket(conn, 2, "Get a better car.-ES");
+        insertUser(conn, "Pat", "Sajack", "psaj@gmail.com", "patsaj123");
+        insertBucket(conn, 3, "Host another TV show.!-PS");*/
+
+
+
 
         Spark.post(
                 "/login",
@@ -161,6 +185,17 @@ public class Main {
                     return "";
                 })
         );
+
+        Spark.post(
+                "/logout",
+                ((request, response) -> {
+                    Session session = request.session();
+                    session.invalidate();
+                    response.redirect("/");
+                    return "";
+                })
+        );
+
         Spark.get(
                 "/getUser",
                 ((request, response) -> {
@@ -170,6 +205,36 @@ public class Main {
                         String json = serializer.serialize(selectUser(conn, email));
                         return json;
                     } catch (Exception e) {
+                    }
+                    return "";
+                })
+        );
+        Spark.post(
+                "/editUser",
+                ((request2, response2) -> {
+                    String email = request2.queryParams("email");
+                   String firstName = request2.queryParams("firstName");
+                    String lastName = request2.queryParams("lastName");
+                    String password = request2.queryParams("password");
+                    String id = request2.queryParams("id");
+                    try {
+                    int idNum = Integer.valueOf(id);
+                        editUser(conn, idNum, firstName, lastName, email, password);
+                    } catch (Exception e) {
+
+                    }
+                    return "";
+                })
+        );
+        Spark.post(
+                "/isDone",
+                ((request2, response2) -> {
+                    String id = request2.queryParams("id");
+                    try {
+                    int idNum = Integer.valueOf(id);
+                        setDone(conn, idNum);
+                    } catch (Exception e) {
+
                     }
                     return "";
                 })
