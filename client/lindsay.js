@@ -65,7 +65,7 @@ getItem: function() {
         console.log(bucket);
         bucketData= JSON.parse(bucket);
         console.log(bucketData);
-        var template = _.template(templates.bucketData);
+        var template = _.template(templates.bucket);
         var bucketItm = "";
         bucketData.forEach(function(item, idx, arr){
           bucketItm += template(item);
