@@ -287,33 +287,20 @@ public class Main {
         Spark.post(
                 "/isDone",
                 ((request2, response2) -> {
+                    Session session = request2.session();
+                    String username = session.attribute("username");
+                    User user = selectUser(conn, username);
                     String id = request2.queryParams("id");
                     try {
                     int idNum = Integer.valueOf(id);
-                        setDone(conn, idNum);
+                        setDone(conn, user.id);
                     } catch (Exception e) {
                     }
                     return "";
                 })
         );
 
-         Spark.post(
-                 "/insertBucket",
-                 ((request, response) ->{
-                     Session session = request.session();
-                     String username = session.attribute("username");
-                     User user = selectUser(conn, username);
-                     //String id = request.queryParams("id");
-                     String text = request.queryParams("newTitle");
-                     try {
-                         int idNum = user.id;
-                         insertBucket(conn, idNum, text);
-                     } catch (Exception e) {
-                     }
-                     return "";
-                 })
-         );
-        String doug;
+
 
         Spark.post(
                 "/insertUserlessBucket",
@@ -327,7 +314,7 @@ public class Main {
         Spark.get(
                 "/globalBucket",
                 ((request, response) -> {
-                        ArrayList<Bucket> buckets = selectAllBuckets(conn);
+                    ArrayList<Bucket> buckets = selectAllBuckets(conn);
                       JsonSerializer serializer = new JsonSerializer();
                         String json = serializer.serialize(buckets);
                         return json;
@@ -347,6 +334,20 @@ public class Main {
                         return json;
                     } catch (Exception e) {
                     }
+                    return "";
+                })
+        );
+        Spark.post(
+                "/insertBucket",
+                ((request, response) ->{
+                    Session session = request.session();
+                    String username = session.attribute("username");
+                    User user = selectUser(conn, username);
+                    //String id = request.queryParams("id");
+                    String text = request.queryParams("newTitle");
+                    int idNum = user.id;
+                    insertBucket(conn, idNum, text);
+                    selectBucket(conn, user.id);
                     return "";
                 })
         );
