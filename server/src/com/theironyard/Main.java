@@ -6,6 +6,7 @@ import spark.Spark;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Main {
 
@@ -34,8 +35,6 @@ public class Main {
         stmt.setString(2, lastName);
         stmt.setString(3, email);
         stmt.setString(4, password);
-
-
     }
 
     //select 1 user info
@@ -65,6 +64,14 @@ public class Main {
     static void insertBucket(Connection conn, int id, String text) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ? , ?, false)"); //causes identity to auto incremnent
         stmt.setInt(1, id);
+        stmt.setString(2, text);
+        stmt.execute();
+    }
+    static void insertUserlessBucket (Connection conn, String text) throws SQLException{
+        Random random = new Random();
+        int randInt = 100000 + (int)(Math.random()* 100000);
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ?, ?, false)");
+        stmt.setInt(1, randInt);
         stmt.setString(2, text);
         stmt.execute();
     }
@@ -154,17 +161,44 @@ public class Main {
         Spark.init();
         //testing stuffs
 
+
+
+
         if (selectAllBuckets(conn).size() == 0) {
             insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
-            insertBucket(conn, 1, "I want to see the world-DS");
-            insertBucket(conn, 1, "I will climb Mt. Kilimanjaro.-DS");
+            insertBucket(conn, 1, "I will climb Mt. Kilimanjaro.");
+            insertBucket(conn, 1, "I want to hang out with Bruce Willis.");
             insertUser(conn, "Bruce", "Willis", "bruce.willis@gmail.com", "passphrase");
-            insertBucket(conn, 2, "I will hang out with Doug one day. -BW ");
+            insertBucket(conn, 2, "I will hang out with Doug one day.");
             insertUser(conn, "Erik", "Schneider", "eSchnei@gmail.com", "passcode");
-            insertBucket(conn, 2, "Get a better car.-ES");
+            insertBucket(conn, 2, "Get a better car.");
             insertUser(conn, "Pat", "Sajack", "psaj@gmail.com", "patsaj123");
-            insertBucket(conn, 3, "Host another TV show.!-PS");
-        }
+            insertBucket(conn, 3, "Host a TV show.");
+            insertUserlessBucket(conn, "Meet Harrison Ford");
+            insertUserlessBucket(conn, "Spend a week in Fiji");
+            insertUserlessBucket(conn, "Go skydiving");
+            insertUserlessBucket(conn, "Visit the Vatican");
+            insertUserlessBucket(conn, "Eat an entire cow");
+            insertUserlessBucket(conn, "Party with Keith Richards");
+            insertUserlessBucket(conn, "Learn to ride a horse.");
+            insertUserlessBucket(conn, "Punch Mike Meyers");
+            insertUserlessBucket(conn, "Pants Donald Trump");
+            insertUserlessBucket(conn, "Become a pokemon master");
+            insertUserlessBucket(conn, "Eat lunch with Jason Alexander");
+            insertUserlessBucket(conn, "Fight Sylvester Stallone");
+            insertUserlessBucket(conn, "Learn Java");
+            insertUserlessBucket(conn, "Learn HTML");
+            insertUserlessBucket(conn, "Learn CSS");
+            insertUserlessBucket(conn, "Learn Javascript");
+            insertUserlessBucket(conn, "Learn to program");
+            insertUserlessBucket(conn, "Go bungee jumping");
+            insertUserlessBucket(conn, "Buy Bill Murray a beer");
+            insertUserlessBucket(conn, "Learn to fly");
+            insertUserlessBucket(conn, "Give Justin Bieber a wedgie");
+            insertUserlessBucket(conn, "Take a karate lesson from Steven Segal");
+            insertUserlessBucket(conn, "Drink Pappy van Winkle");
+            }
+
 
 
 
@@ -192,7 +226,6 @@ public class Main {
                 ((request, response) -> {
                     Session session = request.session();
                     session.invalidate();
-                    response.redirect("/");
                     return "";
                 })
         );
@@ -242,16 +275,23 @@ public class Main {
                  "/insertBucket",
                  ((request, response) -> {
                      String id = request.queryParams("id");
-                     String text = request.queryParams("text");
+                     String text = request.queryParams("globalBucket");
                      try {
                          int idNum = Integer.valueOf(id);
                          insertBucket(conn, idNum, text);
                      } catch (Exception e) {
                      }
-                     response.redirect("/");
                      return "";
                  })
          );
+        Spark.post(
+                "/insertUserlessBucket",
+                ((request2, response2) -> {
+                    String text = request2.queryParams("newTitle");
+                    insertUserlessBucket(conn, text);
+                    return "";
+                })
+        );
 
         Spark.get(
                 "/globalBucket",
