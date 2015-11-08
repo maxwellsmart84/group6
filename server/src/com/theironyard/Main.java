@@ -154,16 +154,17 @@ public class Main {
         Spark.init();
         //testing stuffs
 
-        insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
-        insertBucket(conn, 1, "I want to see the world-DS");
-        insertBucket(conn, 1, "I will climb Mt. Kilimanjaro.-DS");
-        insertUser(conn, "Bruce", "Willis", "bruce.willis@gmail.com", "passphrase");
-        insertBucket(conn, 2, "I will hang out with Doug one day. -BW ");
-        insertUser(conn, "Erik", "Schneider", "eSchnei@gmail.com", "passcode");
-        insertBucket(conn, 2, "Get a better car.-ES");
-        insertUser(conn, "Pat", "Sajack", "psaj@gmail.com", "patsaj123");
-        insertBucket(conn, 3, "Host another TV show.!-PS");
-
+        if (selectAllBuckets(conn).size() == 0) {
+            insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
+            insertBucket(conn, 1, "I want to see the world-DS");
+            insertBucket(conn, 1, "I will climb Mt. Kilimanjaro.-DS");
+            insertUser(conn, "Bruce", "Willis", "bruce.willis@gmail.com", "passphrase");
+            insertBucket(conn, 2, "I will hang out with Doug one day. -BW ");
+            insertUser(conn, "Erik", "Schneider", "eSchnei@gmail.com", "passcode");
+            insertBucket(conn, 2, "Get a better car.-ES");
+            insertUser(conn, "Pat", "Sajack", "psaj@gmail.com", "patsaj123");
+            insertBucket(conn, 3, "Host another TV show.!-PS");
+        }
 
 
 
@@ -221,7 +222,6 @@ public class Main {
                     int idNum = Integer.valueOf(id);
                         editUser(conn, idNum, firstName, lastName, email, password);
                     } catch (Exception e) {
-
                     }
                     return "";
                 })
@@ -234,7 +234,6 @@ public class Main {
                     int idNum = Integer.valueOf(id);
                         setDone(conn, idNum);
                     } catch (Exception e) {
-
                     }
                     return "";
                 })
@@ -257,13 +256,10 @@ public class Main {
         Spark.get(
                 "/globalBucket",
                 ((request, response) -> {
-                    try {
+                        ArrayList<Bucket> buckets = selectAllBuckets(conn);
                       JsonSerializer serializer = new JsonSerializer();
-                        String json = serializer.serialize(selectAllBuckets(conn));
+                        String json = serializer.serialize(buckets);
                         return json;
-                    } catch (Exception e) {
-                    }
-                    return "";
                 })
         );
 
@@ -271,13 +267,14 @@ public class Main {
                 "/userBucket",
                 ((request, response) -> {
                     String id = request.queryParams("id");
+
                     try {
                         int idNum = Integer.valueOf(id);
+                        ArrayList<Bucket> buckets = selectUserBuckets(conn, idNum);
                         JsonSerializer serializer = new JsonSerializer();
-                        String json = serializer.serialize(selectUserBuckets(conn, idNum));
+                        String json = serializer.serialize(buckets);
                         return json;
                     } catch (Exception e) {
-
                     }
                     return "";
                 })
@@ -298,13 +295,10 @@ public class Main {
         Spark.get(
                 "/randomBucket",
                 ((request1, response1) -> {
-                    try {
                     JsonSerializer serializer = new JsonSerializer();
-                        String json = serializer.serialize(selectRandomBucket(conn));
+                    Bucket bucket = selectRandomBucket(conn);
+                        String json = serializer.serialize(bucket);
                         return json;
-                    } catch (Exception e) {
-                    }
-                    return "";
                 })
         );
 
