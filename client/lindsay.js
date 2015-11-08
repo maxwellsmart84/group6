@@ -1,68 +1,133 @@
-$(document).ready(function () {
-  page.init();
-});
-var page= {
+
+var page = {
+    url: "https://tiny-tiny.herokuapp.com/collections/bucketList",
+    // url: '/globalBucket',
   init:function(){
     page.initStyling();
     page.initEvents();
   },
   initStyling:function(){
-    page.getUser();
-    page.grabBucketFromServer();
+    page.getItem();
 
   },
   initEvents:function(){
 
-    },
-  getTemplate: function(name) {
-    return _.template(templates[name]);
-  },
-  loadTemplate: function(name, val) {
-      var tmpl = page.getTemplate(name);
-      return tmpl(val);
-  },
-  getUser: function(){
-      $.ajax({
-        url: '/getUser',
-        method: 'GET',
-        success: function(data){
-          userData = JSON.parse(data);
-          page.loadTemplate($(''), userData, $('#userTmpl').html());
+  // EDIT Bucket Item-------------
+  $('section').on('click', '.listItem', function (event){
+  event.preventDefault();
+  $(this).closest('.listItem').replaceWith('<input type="text" class="updateListItem" placeholder="Edit Bucket List Item" name="updateListItem"</input>');
+  $('.updateListItem').parent().siblings('.editItem').addClass('show');
+  });
 
-        }
-      });
-    },
+  $('.inputs').on('click', '#editedItem', function (event) {
+  event.preventDefault();
+  var itemId = $('.updateListItem').closest('article').data('itemid');
+  var editedListItem = {
+    title: $('.updateListItem').val(),
+    complete: false
+  }
+  page.updateItem(itemId, editedListItem);
 
-  grabBucketsFromServer: function() {
+  });
+
+  //CREATE NEW BUCKET ITEM------------
+  $('.createItem').on('submit', function(event){
+      event.preventDefault();
+        var newItem = {
+          title: $(this).find('input[name="newTitle"]').val(),
+          complete: false,
+
+        };
+      page.createItem(newItem);
+  });
+
+
+  //DELETE BUCKET//
+    $('section').on('click', '.deleteItem', function (event){
+      event.preventDefault();
+      var taskId = $(this).closest('article').data('itemid');
+      page.deleteItem(taskId);
+    });
+  //strikethrough when click the check
+    $('section').on('click', '.completeItem', function(event){
+      event.preventDefault();
+      $(this).parent().siblings('h4').toggleClass('complete')
+
+    });
+
+},
+
+getItem: function() {
     $.ajax({
+      url: page.url,
       type: 'GET',
-      url: '/userBuckets',
-      success: function(data) {
-        console.log("SUCCESS: ", data);
-        bucketData = JSON.parse(data);
-        page.loadBucket(data);
+      success: function (bucket) {
+        var template = _.template(templates.bucket);
+        var bucketItm = "";
+        bucket.forEach(function(item, idx, arr){
+          bucketItm += template(item);
+        });
+        console.log('bucketItm is...', bucketItm);
+        $('section').html(bucketItm);
+
       },
-      failure: function(data) {
-        console.log("FAILURE: ", data);
+      failure: function (err) {
+        console.log("DID NOT GET ITEM", err);
       }
     });
   },
-  sendBucketsToServer: function(bucket) {
-    console.log("IN TRANSIT", bucket);
+
+// var rand = myArray[Math.round(Math.random() * (myArray.length - 1))];
+
+
+createItem: function(newItem) {
+  $.ajax({
+    url: page.url,
+    data: newItem,
+    type: 'POST',
+    success: function (data) {
+      console.log("SUCCESSFULLY CREATED NEW BUCKET", data);
+      page.getItem();
+    },
+    failure: function (err) {
+      console.log("DID NOT CREATE NEW BUCKET", err);
+    }
+  });
+  $('input').val('');
+
+  },
+  // console.log("NEW bucket", newBucket)
+
+  deleteItem: function(itemId) {
     $.ajax({
-      url: '/userBuckets',
-      method: 'POST',
-      data: bucketData,
-      success: function(resp) {
-        var htmlForArticle = page.loadTemplate('#bucketTmpl',resp);
-        $('h4').prepend(htmlForArticle);
-
+      url: page.url + "/" + itemId,
+      type: 'DELETE',
+      success: function (data) {
+        console.log("Delete success!", data);
+        page.getItem();
       },
-      failure: function(resp) {
-        console.log("FAILURE", resp);
+      failure: function (err) {
+        console.log("delete failed",err);
       }
     });
   },
+  updateItem: function(itemId, editedItem) {
+    $.ajax({
+      url: page.url + "/" + itemId,
+      type: 'PUT',
+      data: editedItem,
+      success: function(data) {
+        console.log("update success!", data);
+        page.getItem();
 
+      },
 
-};
+      failure: function(err) {
+        console.log("update failure", err);
+      }
+    });
+  }
+}
+$(document).ready(function () {
+   page.init();
+});
