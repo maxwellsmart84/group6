@@ -34,7 +34,7 @@ var page = {
   $('.createItem').on('submit', function(event){
       event.preventDefault();
         var newItem = {
-          text: $(this).find('input[name="newTitle"]').val(),
+          newTitle: $(this).find('input[name="newTitle"]').val(),
           isDone: false,
 
         };
@@ -63,14 +63,16 @@ getItem: function() {
       type: 'GET',
       success: function (bucket) {
         console.log(bucket);
-      //   var template = _.template(templates.bucketData);
-      //   var bucketItm = "";
-      //   bucketData.forEach(function(item, idx, arr){
-      //     bucketItm += template(item);
-      //   });
-      //   console.log('bucketItm is...', bucketItm);
-      //   $('section').html(bucketItm);
-      //
+        bucketData= JSON.parse(bucket);
+        console.log(bucketData);
+        var template = _.template(templates.bucketData);
+        var bucketItm = "";
+        bucketData.forEach(function(item, idx, arr){
+          bucketItm += template(item);
+        });
+        console.log('bucketItm is...', bucketItm);
+        $('section').html(bucketItm);
+
       },
       failure: function (err) {
         console.log("DID NOT GET ITEM", err);
@@ -82,18 +84,18 @@ getItem: function() {
 
 
 createItem: function(newItem) {
-  // $.ajax({
-  //   url: "",
-  //   data: newItem,
-  //   type: 'POST',
-  //   success: function (data) {
-  //     console.log("SUCCESSFULLY CREATED NEW BUCKET", data);
-  //     page.getItem();
-  //   },
-  //   failure: function (err) {
-  //     console.log("DID NOT CREATE NEW BUCKET", err);
-  //   }
-  // });
+  $.ajax({
+    url: "/insertBucket",
+    data: newItem,
+    type: 'POST',
+    success: function (data) {
+      console.log("SUCCESSFULLY CREATED NEW BUCKET", data);
+      page.getItem();
+    },
+    failure: function (err) {
+      console.log("DID NOT CREATE NEW BUCKET", err);
+    }
+  });
   $('input').val('');
 
   },
