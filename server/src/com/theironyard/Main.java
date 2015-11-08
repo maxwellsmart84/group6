@@ -299,18 +299,22 @@ public class Main {
 
          Spark.post(
                  "/insertBucket",
-                 ((request, response) -> {
-                     String id = request.queryParams("id");
+                 ((request, response) ->{
+                     Session session = request.session();
+                     String username = session.attribute("username");
+                     User user = selectUser(conn, username);
+                     //String id = request.queryParams("id");
                      String text = request.queryParams("newTitle");
                      try {
-                         int idNum = Integer.valueOf(id);
+                         int idNum = user.id;
                          insertBucket(conn, idNum, text);
                      } catch (Exception e) {
                      }
                      return "";
                  })
          );
-String doug = "doug";
+        String doug;
+
         Spark.post(
                 "/insertUserlessBucket",
                 ((request2, response2) -> {
