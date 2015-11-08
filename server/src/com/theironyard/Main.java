@@ -237,7 +237,7 @@ public class Main {
                     selectUser(conn, "username");
                     Session session = request.session();
                     session.attribute("username", username);
-                    response.redirect("/");
+                    response.redirect("/userPage.html");
                     return "";
                 })
         );
@@ -264,6 +264,7 @@ public class Main {
                     return "";
                 })
         );
+
         Spark.get (
                 "/getUsers",
                 ((request3, response3) -> {
@@ -386,7 +387,7 @@ public class Main {
                         //selectUser(conn, idNum);
                     } catch (Exception e) {
                     }
-                    response.redirect("/");
+                    response.redirect("/userPage.html");
                     return "";
                 })
         );
