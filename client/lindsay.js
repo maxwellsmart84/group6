@@ -1,6 +1,7 @@
 
 var page = {
     url: "https://tiny-tiny.herokuapp.com/collections/bucketList",
+    // url: '/globalBucket',
   init:function(){
     page.initStyling();
     page.initEvents();
