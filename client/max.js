@@ -1,9 +1,9 @@
 
 videBackground: function (){
-  $('#frontPage').vide('DreamBig.mp4');
-  $('#myBlock').vide('DreamBig.mp4', {
+  $('body').vide('DreamBig.mp4');
+  $('body').vide('DreamBig.mp4', {
       volume: 0,
-      playbackRate: 1,
+      playbackRate: .4,
       muted: true,
       loop: true,
       autoplay: true,
@@ -13,6 +13,7 @@ videBackground: function (){
       bgColor: 'transparent' // Allow custom background-color for Vide div
   });
 },
+
 
 
 newUserEvent: function(){
