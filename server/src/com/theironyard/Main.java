@@ -4,7 +4,9 @@ import jodd.json.JsonSerializer;
 import spark.Session;
 import spark.Spark;
 
+import java.beans.*;
 import java.sql.*;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -51,6 +53,24 @@ public class Main {
             user.id = results.getInt("id");
         }
         return user;
+    }
+
+    public static ArrayList<User> selectAllUsers(Connection conn) throws SQLException{
+        Statement stmt = conn.createStatement();
+        ArrayList<User> users = new ArrayList<>();
+
+        ResultSet results = stmt.executeQuery("SELECT * FROM users");
+        while (results.next()){
+            User user = new User();
+            user.firstName = results.getString("firstName");
+            user.lastName = results.getString("lastName");
+            user.email = results.getString("email");
+            user.password = results.getString("password");
+            user.id = results.getInt("id");
+            users.add(user);
+        }
+        return users;
+
     }
 
     //remove user (just in case)
@@ -214,6 +234,7 @@ public class Main {
                     if (!password.equals(user.password)) {
                         Spark.halt(403);
                     }
+                    selectUser(conn, "username");
                     Session session = request.session();
                     session.attribute("username", username);
                     response.redirect("/");
@@ -243,6 +264,15 @@ public class Main {
                     return "";
                 })
         );
+        Spark.get (
+                "/getUsers",
+                ((request3, response3) -> {
+                    JsonSerializer serializer = new JsonSerializer();
+                    String json = serializer.serialize(selectAllUsers(conn));
+                    return json;
+                })
+        );
+
         Spark.post(
                 "/editUser",
                 ((request2, response2) -> {
@@ -356,7 +386,7 @@ public class Main {
                         //selectUser(conn, idNum);
                     } catch (Exception e) {
                     }
-                    //response.redirect("/");
+                    response.redirect("/");
                     return "";
                 })
         );
