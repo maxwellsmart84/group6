@@ -21,7 +21,15 @@
 
 #loginBox {
   padding: 10px;
-  height: 275px;
+  background-color: white;
+  z-index: 2;
+  position: relative;
+  left: 29%;
+  top: 92px;
+  border-radius: 8%; }
+
+#signUpBox {
+  padding: 10px;
   background-color: white;
   z-index: 2;
   position: relative;
