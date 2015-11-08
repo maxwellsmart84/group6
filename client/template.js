@@ -1,7 +1,7 @@
 var templates = {};
 
 templates.bucket=[
-'<article data-itemid="<%= _id %>">',
+'<article data-itemid="<%= id %>">',
 '<div class="bucketLineItem">',
 '<span>',
 '<a class="completeItem" href="#">',
@@ -9,7 +9,7 @@ templates.bucket=[
 '</i>',
 '</a>',
 '</span>',
-'<h4 class="listItem"><%= title %></h4>',
+'<h4 class="listItem"><%= text %></h4>',
 '<span>',
 '<a class="deleteItem" href="#">',
 '<i class="fa fa-trash-o fa-2x">',

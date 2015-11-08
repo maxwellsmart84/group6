@@ -59,17 +59,18 @@ var page = {
 
 getItem: function() {
     $.ajax({
-      url: page.url,
+      url: "/userBucket",
       type: 'GET',
       success: function (bucket) {
-        var template = _.template(templates.bucket);
-        var bucketItm = "";
-        bucket.forEach(function(item, idx, arr){
-          bucketItm += template(item);
-        });
-        console.log('bucketItm is...', bucketItm);
-        $('section').html(bucketItm);
-
+        console.log(bucket);
+      //   var template = _.template(templates.bucketData);
+      //   var bucketItm = "";
+      //   bucketData.forEach(function(item, idx, arr){
+      //     bucketItm += template(item);
+      //   });
+      //   console.log('bucketItm is...', bucketItm);
+      //   $('section').html(bucketItm);
+      //
       },
       failure: function (err) {
         console.log("DID NOT GET ITEM", err);
