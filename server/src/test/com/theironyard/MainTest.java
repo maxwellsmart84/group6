@@ -87,6 +87,8 @@ public class MainTest {
         endConnection(conn);
         assertTrue(bucket != null);
     }
+
+
  /*  @Test
    public void testDeleteUser() throws SQLException{
         Connection conn = startConnection();
