@@ -42,7 +42,7 @@ public class Main {
     //select 1 user info
     public static User selectUser(Connection conn, String email) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE email = ?");
-        stmt.setString( 1 , email);
+        stmt.setString(1, email);
         User user = new User();
         ResultSet results = stmt.executeQuery();
         if (results.next()){
@@ -173,8 +173,6 @@ public class Main {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) throws SQLException {
-        String doug = "doug";
-        String test = "test;";
         Connection conn = DriverManager.getConnection("jdbc:h2:./main");
         createTables(conn);
         Spark.externalStaticFileLocation("client");
@@ -220,8 +218,6 @@ public class Main {
             }
 
 
-
-
         Spark.post(
                 "/login",
                 ((request, response) -> {
@@ -234,10 +230,10 @@ public class Main {
                     if (!password.equals(user.password)) {
                         Spark.halt(403);
                     }
-                    selectUser(conn, "username");
+                    //selectUser(conn, "username");
                     Session session = request.session();
                     session.attribute("username", username);
-                    response.redirect("/userPage.html");
+                    //response.redirect("/userPage.html");
                     return "";
                 })
         );
@@ -316,9 +312,9 @@ public class Main {
                  })
          );
         Spark.post(
-                "/insertUserlessBucket",
+                "/dreamBox",
                 ((request2, response2) -> {
-                    String text = request2.queryParams("newTitle");
+                    String text = request2.queryParams("dreamBox");
                     insertUserlessBucket(conn, text);
                     return "";
                 })
@@ -337,11 +333,11 @@ public class Main {
         Spark.get(
                 "/userBucket",
                 ((request, response) -> {
-                    String id = request.queryParams("id");
-
+                    Session session = request.session();
+                    String username = session.attribute("username");
+                    User user = selectUser(conn, username);
                     try {
-                        int idNum = Integer.valueOf(id);
-                        ArrayList<Bucket> buckets = selectUserBuckets(conn, idNum);
+                        ArrayList<Bucket> buckets = selectUserBuckets(conn, user.id);
                         JsonSerializer serializer = new JsonSerializer();
                         String json = serializer.serialize(buckets);
                         return json;
@@ -387,7 +383,6 @@ public class Main {
                         //selectUser(conn, idNum);
                     } catch (Exception e) {
                     }
-                    response.redirect("/userPage.html");
                     return "";
                 })
         );

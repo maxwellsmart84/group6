@@ -58,7 +58,6 @@ public class MainTest {
         ArrayList<Bucket> buckets = Main.selectAllBuckets(conn);
         endConnection(conn);
         assertTrue(buckets!= null);
-
     }
 
    @Test
