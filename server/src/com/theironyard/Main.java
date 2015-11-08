@@ -179,9 +179,6 @@ public class Main {
         Spark.init();
         //testing stuffs
 
-
-
-
         if (selectAllBuckets(conn).size() == 0) {
             insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
             insertBucket(conn, 1, "I will climb Mt. Kilimanjaro.");
@@ -286,6 +283,7 @@ public class Main {
                     return "";
                 })
         );
+
         Spark.post(
                 "/isDone",
                 ((request2, response2) -> {
@@ -298,11 +296,12 @@ public class Main {
                     return "";
                 })
         );
+
          Spark.post(
                  "/insertBucket",
                  ((request, response) -> {
                      String id = request.queryParams("id");
-                     String text = request.queryParams("globalBucket");
+                     String text = request.queryParams("newTitle");
                      try {
                          int idNum = Integer.valueOf(id);
                          insertBucket(conn, idNum, text);
@@ -311,10 +310,11 @@ public class Main {
                      return "";
                  })
          );
+
         Spark.post(
-                "/dreamBox",
+                "/insertUserlessBucket",
                 ((request2, response2) -> {
-                    String text = request2.queryParams("dreamBox");
+                    String text = request2.queryParams("newTitle");
                     insertUserlessBucket(conn, text);
                     return "";
                 })
