@@ -1,5 +1,6 @@
 package com.theironyard;
 
+import com.sun.deploy.security.MozillaJSSDSASignature;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -86,6 +87,15 @@ public class MainTest {
         Bucket bucket = Main.selectRandomBucket(conn);
         endConnection(conn);
         assertTrue(bucket != null);
+    }
+   @Test
+    public void testUserlessBucket() throws SQLException{
+        Connection conn = startConnection();
+        Main.insertUserlessBucket(conn, "test");
+      //  Main.insertBucket(conn, 1, "testwithuserid");
+        ArrayList<Bucket> buckets = Main.selectAllBuckets(conn);
+        endConnection(conn);
+        assertTrue(buckets!= null);
     }
 
 
