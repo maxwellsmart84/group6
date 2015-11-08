@@ -499,7 +499,13 @@
       <option name="project" value="LOCAL" />
       <updated>1447020537271</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="updated jar">
+      <created>1447020864416</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1447020864416</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -585,7 +591,8 @@
     <MESSAGE value="respons.redirected" />
     <MESSAGE value="respons.redirected userPage.html" />
     <MESSAGE value="passed user.id" />
-    <option name="LAST_COMMIT_MESSAGE" value="passed user.id" />
+    <MESSAGE value="updated jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated jar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
