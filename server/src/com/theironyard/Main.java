@@ -154,16 +154,17 @@ public class Main {
         Spark.init();
         //testing stuffs
 
-        insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
-        insertBucket(conn, 1, "I want to see the world-DS");
-        insertBucket(conn, 1, "I will climb Mt. Kilimanjaro.-DS");
-        insertUser(conn, "Bruce", "Willis", "bruce.willis@gmail.com", "passphrase");
-        insertBucket(conn, 2, "I will hang out with Doug one day. -BW ");
-        insertUser(conn, "Erik", "Schneider", "eSchnei@gmail.com", "passcode");
-        insertBucket(conn, 2, "Get a better car.-ES");
-        insertUser(conn, "Pat", "Sajack", "psaj@gmail.com", "patsaj123");
-        insertBucket(conn, 3, "Host another TV show.!-PS");
-
+        if (selectAllBuckets(conn).size() == 0) {
+            insertUser(conn, "Doug", "Scott", "dougscott2@gmail.com", "password");
+            insertBucket(conn, 1, "I want to see the world-DS");
+            insertBucket(conn, 1, "I will climb Mt. Kilimanjaro.-DS");
+            insertUser(conn, "Bruce", "Willis", "bruce.willis@gmail.com", "passphrase");
+            insertBucket(conn, 2, "I will hang out with Doug one day. -BW ");
+            insertUser(conn, "Erik", "Schneider", "eSchnei@gmail.com", "passcode");
+            insertBucket(conn, 2, "Get a better car.-ES");
+            insertUser(conn, "Pat", "Sajack", "psaj@gmail.com", "patsaj123");
+            insertBucket(conn, 3, "Host another TV show.!-PS");
+        }
 
 
 
