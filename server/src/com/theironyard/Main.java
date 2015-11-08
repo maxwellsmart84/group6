@@ -310,7 +310,7 @@ public class Main {
                      return "";
                  })
          );
-String doug = "doug";
+
         Spark.post(
                 "/insertUserlessBucket",
                 ((request2, response2) -> {
