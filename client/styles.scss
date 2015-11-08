@@ -17,14 +17,26 @@
   background-position: 100% 100%;
   background-repeat: no-repeat;
 }
+
 #dreamBox {
   background-color: transparent;
   margin-bottom: 0px;
   h1{
     text-align: center;
-    font-family: 'Poiret One', cursive;
+    }
   }
-}
+
+  #loginBox{
+    padding:10px;
+    height: 275px;
+    background-color: white;
+    z-index: 2;
+    position: relative;
+    left: 29%;
+    top: 92px;
+    border-radius: 8%;
+  }
+
 .editItem {
   text-align: center;
 
