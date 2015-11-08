@@ -313,6 +313,7 @@ public class Main {
                      return "";
                  })
          );
+        String doug;
 
         Spark.post(
                 "/insertUserlessBucket",
