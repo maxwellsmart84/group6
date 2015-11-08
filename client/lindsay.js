@@ -82,18 +82,18 @@ getItem: function() {
 
 
 createItem: function(newItem) {
-  $.ajax({
-    url: page.url,
-    data: newItem,
-    type: 'POST',
-    success: function (data) {
-      console.log("SUCCESSFULLY CREATED NEW BUCKET", data);
-      page.getItem();
-    },
-    failure: function (err) {
-      console.log("DID NOT CREATE NEW BUCKET", err);
-    }
-  });
+  // $.ajax({
+  //   url: "",
+  //   data: newItem,
+  //   type: 'POST',
+  //   success: function (data) {
+  //     console.log("SUCCESSFULLY CREATED NEW BUCKET", data);
+  //     page.getItem();
+  //   },
+  //   failure: function (err) {
+  //     console.log("DID NOT CREATE NEW BUCKET", err);
+  //   }
+  // });
   $('input').val('');
 
   },
