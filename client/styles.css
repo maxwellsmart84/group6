@@ -10,7 +10,8 @@
   background-color: transparent;
   margin-bottom: 0px; }
   .jumbotron h1 {
-    text-align: center; }
+    text-align: center;
+    font-family: 'Poiret One', cursive; }
 
 .editItem {
   text-align: center; }
@@ -28,7 +29,12 @@
   padding-left: 5px; }
 
 .listItem {
-  font-size: 20px; }
+  font-size: 30px;
+  font-family: 'Poiret One', cursive; }
+
+.complete {
+  text-decoration: line-through;
+  color: black; }
 
 .updateListItem {
   vertical-align: super;

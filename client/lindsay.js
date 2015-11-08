@@ -40,23 +40,18 @@ var page = {
       page.createItem(newItem);
   });
 
+
   //DELETE BUCKET//
     $('section').on('click', '.deleteItem', function (event){
       event.preventDefault();
       var taskId = $(this).closest('article').data('itemid');
       page.deleteItem(taskId);
     });
-
+  //strikethrough when click the check
     $('section').on('click', '.completeItem', function(event){
       event.preventDefault();
-      $(this).parent().siblings('h3').toggleClass('complete')
+      $(this).parent().siblings('h4').toggleClass('complete')
 
-    });
-
-    //Delete All Items
-  $('#completeAll').on('click', function(event){
-    event.preventDefault();
-    $(this).parent().parent().siblings().children().children().children('h3').toggleClass('complete')
     });
 
 },
@@ -67,22 +62,22 @@ getItem: function() {
       type: 'GET',
       success: function (bucket) {
         var template = _.template(templates.bucket);
-        var markup = "";
+        var bucketItm = "";
         bucket.forEach(function(item, idx, arr){
-          markup += template(item);
+          bucketItm += template(item);
         });
-        console.log('markup is...', markup);
-        $('section').html(markup);
-        var count = $('.listItem').length;
-        $('#itemCount').html(count);
+        console.log('bucketItm is...', bucketItm);
+        $('section').html(bucketItm);
 
-        //this is where I will add the completed tasks and amount of items left based on length
       },
       failure: function (err) {
         console.log("DID NOT GET ITEM", err);
       }
     });
   },
+
+// var rand = myArray[Math.round(Math.random() * (myArray.length - 1))];
+
 
 createItem: function(newItem) {
   $.ajax({
