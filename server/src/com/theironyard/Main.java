@@ -82,7 +82,7 @@ public class Main {
 
     //adds row for new bucket in buckets table
     static void insertBucket(Connection conn, int id, String text) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ? , ?, false)"); //causes identity to auto incremnent
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ? , ?, true)"); //causes identity to auto incremnent
         stmt.setInt(1, id);
         stmt.setString(2, text);
         stmt.execute();
@@ -111,11 +111,7 @@ public class Main {
         }
         return bucket;
     }
-    public static void updatBool (Connection conn, String username) throws SQLException{
-        PreparedStatement stmt = conn.prepareStatement("SELECT id FROM buckets INNER JOIN users ON ");
 
-
-    }
     //select random bucket
     public static Bucket selectRandomBucket (Connection conn) throws SQLException{
         Statement stmt = conn.createStatement();
@@ -145,6 +141,7 @@ public class Main {
         }
         return buckets;
     }
+
     public static void setDone(Connection conn, String bucketText) throws SQLException{
         PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = true WHERE text = ?");
         stmt.setString(1, bucketText);
