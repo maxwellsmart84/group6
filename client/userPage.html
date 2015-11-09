@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Group 6</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" media="screen" title="no title" charset="utf-8">
+
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1></h1>
+      <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+      <p><a class="btn btn-lg btn-success" href="#" role="button">Get Bucket</a></p>
+    </div>
+    <div class="container fluid">
+      <div class="row">
+        <div class="col-lg-1"></div>
+        <!--left side column empty-->
+
+        <div class="col-lg-12">
+          <div class="list">
+            <!--New Bucket List Item-->
+            <div class="top">
+              <form class="createItem" name="insertBucket">
+                <input type="text" class="newListItem" name="newTitle" placeholder="Add Bucket List Item">
+                <button type= "submit" id="submitBtn" class="btn btn-primary">Add Item</button>
+              </form>
+            </div>
+            <!--End Bucket List Inputs-->
+
+            <!-- Bucket list tasks -->
+            <div class="itemList">
+              <section class="inputs">
+                <!-- Bucket list items here -->
+              </section>
+
+            </div> <!-- end itemList -->
+          </div> <!--end list-->
+        </div> <!--end col-lg-10-->
+
+        <div class="col-lg-1"></div>
+        <!--right side column empty-->
+      </div> <!--End row-->
+
+      <footer class="footer">
+        <p>&copy; Company 2015</p>
+      </footer>
+    </div> <!--end container -->
+
+
+<!-- lib files -->
+  <script src="bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
+  <script src="bower_components/underscore/underscore.js" charset="utf-8"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+<!-- app files -->
+  <script src="lindsay.js" charset="utf-8"></script>
+  <script src="template.js"></script>
+  </body>
+</html>

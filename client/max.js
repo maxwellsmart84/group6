@@ -16,26 +16,22 @@ videBackground: function (){
 
 
 
-newUserEvent: function(){
-  $(".container").on("click", "#signUp", function(event){
-    $("#inputEmail").removeClass("hidden-class");
-    $("#inputAvatar").removeClass("hidden-class");
-    $("#loginSubmit").removeClass("hidden-class");
-    $("#signUp").addClass("hidden-class");
-    $("#loginReturn").addClass("hidden-class");
+loginEvent: function(){
+  $("#loginBox").on("click", "#loginClick", function(event){
+    event.preventDefault();
+    $("#loginBox").removeClass("hidden-class");
+    $("#inputFirstName").addClass("hidden-class");
+    $("#inputLastName").addClass("hidden-class");
+    $("#loginSubmit").addClass("hidden-class");
   });
 },
 
 
 loginSub: function(){
- $(".container").on("click", "#loginSubmit", function(event){
+ $("body").on("click", "#signUp", function(event){
    event.preventDefault;
    var $submitBtn = $(this);//WASNT SURE IF I NEEDED THIS
-   $(".col-md-8").removeClass("hidden-class"); //REMOVES ALL HIDDEN CLASSES FROM CHATBOX
-   $(".col-md-4").removeClass("hidden-class");
-   $("#loginContainer").addClass("hidden-class");
-   $(".navbar-default").removeClass("hidden-class");
-   $(".messageWriter").removeClass("hidden-class");
+   $(".col-md-12").removeClass("hidden-class");
    var userName = $("input[name='username']").val();//USER INPUT COLLECTION STRINGIFIED
    var userEmail = $("input[name='email']").val();
    var userAvatar = $("input[name='avatar']").val();

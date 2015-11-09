@@ -17,8 +17,25 @@
   background-color: transparent;
   margin-bottom: 0px; }
   #dreamBox h1 {
-    text-align: center;
-    font-family: 'Poiret One', cursive; }
+    text-align: center; }
+
+#loginBox {
+  padding: 10px;
+  background-color: white;
+  z-index: 2;
+  position: relative;
+  left: 29%;
+  top: 92px;
+  border-radius: 8%; }
+
+#signUpBox {
+  padding: 10px;
+  background-color: white;
+  z-index: 2;
+  position: relative;
+  left: 29%;
+  top: 92px;
+  border-radius: 8%; }
 
 .editItem {
   text-align: center; }

@@ -34,8 +34,8 @@ var page = {
   $('.createItem').on('submit', function(event){
       event.preventDefault();
         var newItem = {
-          title: $(this).find('input[name="newTitle"]').val(),
-          complete: false,
+          newTitle: $(this).find('input[name="newTitle"]').val(),
+          isDone: false,
 
         };
       page.createItem(newItem);
@@ -59,14 +59,24 @@ var page = {
 
 getItem: function() {
     $.ajax({
+<<<<<<< HEAD
       // url: '/getBucket',
       url: page.url,
       type: 'GET',
       success: function (bucket) {
         // var itemData = JSON.parse(data);
         var template = _.template(templates.bucket);
+=======
+      url: "/userBucket",
+      type: 'GET',
+      success: function (bucket) {
+        console.log(bucket);
+        bucketData= JSON.parse(bucket);
+        console.log(bucketData);
+        var template = _.template(templates.bucketData);
+>>>>>>> b3d894e3e4569830125211478ac2f20d34c2048f
         var bucketItm = "";
-        bucket.forEach(function(item, idx, arr){
+        bucketData.forEach(function(item, idx, arr){
           bucketItm += template(item);
         });
         console.log('bucketItm is...', bucketItm);
@@ -84,7 +94,7 @@ getItem: function() {
 
 createItem: function(newItem) {
   $.ajax({
-    url: page.url,
+    url: "/insertBucket",
     data: newItem,
     type: 'POST',
     success: function (data) {

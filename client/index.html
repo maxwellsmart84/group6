@@ -7,30 +7,39 @@
     <link rel="stylesheet" href="styles.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
-  <div id="frontPage">
-    <h3><a id="loginClick" href="#">Login</a></h3>
+    <div id="frontPage">
+      <h3><a href="#" id="loginClick">Login</a></h3>
       <div class="jumbotron"id ="dreamBox">
         <h1>Dare to Dream</h1>
         <div class="input-group input-group-lg">
           <span class="input-group-addon" id="sizing-addon1"></span>
-          <input type="text" class="form-control" id= "dreamBox" placeholder="What do you dream of?" aria-describedby="sizing-addon1" name="globalBucket">
+          <input type="text" class="form-control" id= "dreamBox" name="dreamBox" placeholder="What do you dream of?" aria-describedby="sizing-addon1">
         </div>
       </div>
     </div>
-    <div class = "col-md-12 hidden-class">
-      <form name ='login'>
-      <input class= "form-control" type="text" placeholder="Username" name="username" value="">
-      <a href="#" id ="signUp">New User? Click here!</a>
-      <input class= "form-control" id= "inputEmail" type="email" placeholder="Email" name="firstName" value="">
-      <input class= "form-control" id="inputAvatar" type="text" placeholder= "Image" name="lastName" value="">
-      <input class ="btn btn-default btn-lg" id= "loginSubmit" type="submit" name="email" value="Submit">
-      <input class ="btn btn-default btn-lg" id= "loginReturn" type="submit" name="" value="Submit">
+    <div class = "col-md-5 hidden-class" id="loginBox">
+      <form class="loginForm" action="userPage.html" name ='login'>
+        <input class= "form-control" id= "inputEmail" type="email" placeholder="Email" name="email" value="">
+        <input class= "form-control" id= "inputPassword" type="password" placeholder="Password" name="password" value="">
+        <a href="#" id ="signUp">New User? Click here!</a>
+        <input class ="btn btn-default btn-lg" id= "loginReturn" type="submit" name="login" value="Submit">
+      </form>
     </div>
+    <div class= "col-md-5 hidden-class" id="signUpBox">
+      <form action="userPage.html" name="signUp">
+        <input class= "form-control" id= "inputFirstName" type="text" placeholder="First Name" name="firstName" value="">
+        <input class= "form-control" id="inputLastName" type="text" placeholder= "Last Name" name="lastName" value="">
+        <input class= "form-control" id= "inputEmail" type="email" placeholder="Email" name="email" value="">
+        <input class= "form-control" id= "inputPassword" type="password" placeholder="Password" name="password" value="">
+        <input class ="btn btn-default btn-lg" id= "loginSubmit" type="submit" name="signUp" value="Submit">
+      </form>
 
 <!-- lib files -->
   <script src="bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
   <script src="bower_components/underscore/underscore.js" charset="utf-8"></script>
+  <script type="bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script src="bower_components/vide//dist/jquery.vide.min.js"></script>
+
 
 <!-- app files -->
   <script src="main.js" charset="utf-8"></script>
