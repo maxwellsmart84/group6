@@ -9,12 +9,21 @@ var page = {
   initStyling:function(){
     page.getItem();
 
+	  $('#slideshow').cycle({
+	    fx: 'fade',
+	    pager: '#smallnav',
+	    pause:   1,
+	    speed: 2500,
+	    timeout:  5500
+	  });
+
   },
   initEvents:function(){
 
   // EDIT Bucket Item-------------
   $('section').on('click', '.listItem', function (event){
   event.preventDefault();
+  console.log(event.target);
   $(this).closest('.listItem').replaceWith('<input type="text" class="updateListItem" placeholder="Edit Bucket List Item" name="updateListItem"</input>');
   $('.updateListItem').parent().siblings('.editItem').addClass('show');
   });
@@ -28,6 +37,51 @@ var page = {
   }
   page.updateItem(itemId, editedListItem);
 
+  });
+
+  $('.container').on('click', ".completeItem", function (event){
+    event.preventDefault();
+    var parentElement = $(this).parent().parent().parent();
+    var itemID = parentElement.data("itemid");
+    console.log(itemID);
+    $.ajax({
+      url: "/isDone",
+      type: 'POST',
+      data: itemID,
+      success: function(data) {
+        console.log("update success!", data);
+      },
+
+      failure: function(err) {
+        console.log("update failure", err);
+      }
+    });
+
+  });
+
+  $('body').on('click', "#getRandom", function(event){
+      console.log(event.target);
+      event.preventDefault();
+      $.ajax({
+        url: "/randomBucket",
+        type: 'GET',
+        success: function (bucket2) {
+          console.log(bucket2);
+          var bucketData2= JSON.parse(bucket2);
+          console.log(bucketData2);
+          var template = _.template(templates.bucket);
+          var bucketItm = "";
+          bucketData2.forEach(function(item, idx, arr){
+            bucketItm += template(item);
+          });
+          console.log('bucketItm is...', bucketItm);
+          $('section').html(bucketItm);
+
+        },
+        failure: function (err) {
+          console.log("DID NOT GET ITEM", err);
+        }
+      });
   });
 
   //CREATE NEW BUCKET ITEM------------
@@ -65,7 +119,7 @@ getItem: function() {
         console.log(bucket);
         bucketData= JSON.parse(bucket);
         console.log(bucketData);
-        var template = _.template(templates.bucketData);
+        var template = _.template(templates.bucket);
         var bucketItm = "";
         bucketData.forEach(function(item, idx, arr){
           bucketItm += template(item);
@@ -79,6 +133,29 @@ getItem: function() {
       }
     });
   },
+
+  getRandomBucket: function() {
+      $.ajax({
+        url: "/randomBucket",
+        type: 'GET',
+        success: function (bucket) {
+          console.log(bucket);
+          bucketData= JSON.parse(bucket);
+          console.log(bucketData);
+          var template = _.template(templates.bucket);
+          var bucketItm = "";
+          bucketData.forEach(function(item, idx, arr){
+            bucketItm += template(item);
+          });
+          console.log('bucketItm is...', bucketItm);
+          $('section').html(bucketItm);
+
+        },
+        failure: function (err) {
+          console.log("DID NOT GET ITEM", err);
+        }
+      });
+    },
 
 // var rand = myArray[Math.round(Math.random() * (myArray.length - 1))];
 
@@ -116,9 +193,9 @@ createItem: function(newItem) {
   },
   updateItem: function(itemId, editedItem) {
     $.ajax({
-      url: page.url + "/" + itemId,
+      url: "/userBucket",
       type: 'PUT',
-      data: editedItem,
+      data: "done=true",
       success: function(data) {
         console.log("update success!", data);
         page.getItem();
