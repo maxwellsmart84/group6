@@ -5,6 +5,11 @@ body {
 
 }
 
+.fa-2x {
+    font-size: 2.5em;
+    color: white;
+  }
+
 
 #slideshow, img.bgM {
   min-height: 100%;
@@ -48,9 +53,9 @@ body {
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
-    box-shadow: inset .5px .5px 62px 5px rgb(255, 255, 255), 0px 28px 100px 16px rgb(255, 255, 255);
-    border-radius: 2%;
-    color:white;
+    box-shadow: inset 1px 1px 62px 23px rgb(255, 255, 255), 1px 1px 100px 40px rgb(255, 255, 255);
+    border-radius: 9%;
+    color: white;
   }
 }
 .container-narrow > hr {
@@ -64,6 +69,7 @@ body {
   background-color: transparent;
   border-radius: 3%;
   color:white;
+  text-shadow: 2px rgba(255, 0, 0, 0.5);
 }
 .jumbotron .btn {
   padding: 14px 24px;
