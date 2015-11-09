@@ -111,7 +111,11 @@ public class Main {
         }
         return bucket;
     }
+    public static void updatBool (Connection conn, String username) throws SQLException{
+        PreparedStatement stmt = conn.prepareStatement("SELECT id FROM buckets INNER JOIN users ON ");
 
+
+    }
     //select random bucket
     public static Bucket selectRandomBucket (Connection conn) throws SQLException{
         Statement stmt = conn.createStatement();
@@ -141,9 +145,9 @@ public class Main {
         }
         return buckets;
     }
-    public static void setDone(Connection conn, int id) throws SQLException{
-        PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = TRUE WHERE id = ?");
-        stmt.setInt(1, id);
+    public static void setDone(Connection conn, String bucketText) throws SQLException{
+        PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = true WHERE text = ?");
+        stmt.setString(1, bucketText);
         stmt.execute();
     }
 
@@ -288,10 +292,11 @@ public class Main {
                 "/isDone",
                 ((request2, response2) -> {
                     Session session = request2.session();
-                    String username = session.attribute("username");
-                    int id = selectUser(conn, username).id;
-                    Bucket bucket = selectBucket(conn, id);
-                    setDone(conn, bucket.id);
+                    String bucketText = request2.queryParams("bucketText");
+                    //String id = request2.queryParams("id");
+                    //int idNum = selectUser(conn, username).id;
+                    //Bucket bucket = selectBucket(conn, idNum);
+                    setDone(conn, bucketText);
                     return "";
                 })
         );
