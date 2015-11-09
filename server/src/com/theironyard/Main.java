@@ -82,7 +82,7 @@ public class Main {
 
     //adds row for new bucket in buckets table
     static void insertBucket(Connection conn, int id, String text) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ? , ?, true)"); //causes identity to auto incremnent
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ? , ?, false)"); //causes identity to auto incremnent
         stmt.setInt(1, id);
         stmt.setString(2, text);
         stmt.execute();
@@ -113,7 +113,7 @@ public class Main {
     }
 
     //select random bucket
-    public static Bucket selectRandomBucket (Connection conn) throws SQLException{
+    public static Bucket selectRandomBucket(Connection conn) throws SQLException{
         Statement stmt = conn.createStatement();
         Bucket bucket = null;
 
@@ -142,9 +142,10 @@ public class Main {
         return buckets;
     }
 
-    public static void setDone(Connection conn, String bucketText) throws SQLException{
-        PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = true WHERE text = ?");
-        stmt.setString(1, bucketText);
+    public static void setDone(Connection conn, int id) throws SQLException{
+        PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = NOT isDone WHERE id = ?");
+        //PreparedStatement stmt2 = conn.prepareStatement("UPDATE buckets SET")
+        stmt.setInt(1, id);
         stmt.execute();
     }
 
@@ -288,12 +289,19 @@ public class Main {
         Spark.post(
                 "/isDone",
                 ((request2, response2) -> {
-                    Session session = request2.session();
-                    String bucketText = request2.queryParams("bucketText");
+                    //Session session = request2.session();
+                    //String bucketText = request2.queryParams("bucketText");
+                    String id = request2.queryParams("id");
+                    try {
+                    int idNum = Integer.valueOf(id);
+                        setDone(conn, idNum);
+                    } catch (Exception e) {
+
+                    }
                     //String id = request2.queryParams("id");
                     //int idNum = selectUser(conn, username).id;
                     //Bucket bucket = selectBucket(conn, idNum);
-                    setDone(conn, bucketText);
+                    //setDone(conn, bucketText);
                     return "";
                 })
         );
