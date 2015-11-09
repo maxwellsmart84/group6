@@ -35,7 +35,6 @@ var page = {
       event.preventDefault();
         var newItem = {
           newTitle: $(this).find('input[name="newTitle"]').val(),
-          isDone: false,
 
         };
       page.createItem(newItem);
@@ -117,8 +116,8 @@ createItem: function(newItem) {
   updateItem: function(itemId, editedItem) {
     $.ajax({
       url: "/userBucket",
-      type: 'PUT',
-      data: stringSend,
+      type: 'POST',
+      data: "done=true",
       success: function(data) {
         console.log("update success!", data);
         page.getItem();
