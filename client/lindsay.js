@@ -51,6 +51,31 @@ var page = {
 
   });
 
+  $('.container').on('click', "#getRandom", function(event){
+      console.log(event.target);
+      event.preventDefault();
+      $.ajax({
+        url: "/randomBucket",
+        type: 'GET',
+        success: function (bucket) {
+          console.log(bucket);
+          bucketData= JSON.parse(bucket);
+          console.log(bucketData);
+          var template = _.template(templates.bucket);
+          var bucketItm = "";
+          bucketData.forEach(function(item, idx, arr){
+            bucketItm += template(item);
+          });
+          console.log('bucketItm is...', bucketItm);
+          $('section').html(bucketItm);
+
+        },
+        failure: function (err) {
+          console.log("DID NOT GET ITEM", err);
+        }
+      });
+  });
+
   //CREATE NEW BUCKET ITEM------------
   $('.createItem').on('submit', function(event){
       event.preventDefault();
@@ -100,6 +125,29 @@ getItem: function() {
       }
     });
   },
+
+  getRandomBucket: function() {
+      $.ajax({
+        url: "/randomBucket",
+        type: 'GET',
+        success: function (bucket) {
+          console.log(bucket);
+          bucketData= JSON.parse(bucket);
+          console.log(bucketData);
+          var template = _.template(templates.bucket);
+          var bucketItm = "";
+          bucketData.forEach(function(item, idx, arr){
+            bucketItm += template(item);
+          });
+          console.log('bucketItm is...', bucketItm);
+          $('section').html(bucketItm);
+
+        },
+        failure: function (err) {
+          console.log("DID NOT GET ITEM", err);
+        }
+      });
+    },
 
 // var rand = myArray[Math.round(Math.random() * (myArray.length - 1))];
 
