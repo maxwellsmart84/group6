@@ -59,14 +59,13 @@ var page = {
 
 getItem: function() {
     $.ajax({
-<<<<<<< HEAD
       // url: '/getBucket',
       url: page.url,
       type: 'GET',
       success: function (bucket) {
         // var itemData = JSON.parse(data);
         var template = _.template(templates.bucket);
-=======
+
       url: "/userBucket",
       type: 'GET',
       success: function (bucket) {
@@ -74,7 +73,6 @@ getItem: function() {
         bucketData= JSON.parse(bucket);
         console.log(bucketData);
         var template = _.template(templates.bucketData);
->>>>>>> b3d894e3e4569830125211478ac2f20d34c2048f
         var bucketItm = "";
         bucketData.forEach(function(item, idx, arr){
           bucketItm += template(item);
