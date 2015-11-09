@@ -59,9 +59,10 @@ var page= {
     $('body').on("keypress", "#dreamBoxInput", function(event){
       if (event.which === 13){
         event.preventDefault();
-        var newItem = $('#dreamBoxInput').val();
+        newItem = $("dreamBoxInput").val();
+        console.log(newItem);
         $.ajax({
-          url: "/insertUserListBucket",
+          url: "/insertUserlessBucket",
           data: newItem,
           type: 'POST',
           success: function (data) {
