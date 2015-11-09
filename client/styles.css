@@ -14,10 +14,18 @@
   background-repeat: no-repeat; }
 
 #dreamBox {
+  position: relative;
+  width: 80%;
   background-color: transparent;
-  margin-bottom: 0px; }
+  margin-bottom: 0px;
+  left: 10%;
+  top: 22%; }
   #dreamBox h1 {
-    text-align: center; }
+    font-family: "Cutive", sans-serif;
+    color: transparent;
+    text-shadow: 0 0 2px white, 0 0 10px white, 0 0 20px white, 0 0 30px white, 0 0 40px #fbf6e1, 0 0 70px #fbf6e1, 0 0 80px #fbf6e1, 0 0 100px #fbf6e1;
+    text-align: center;
+    letter-spacing: 33px; }
 
 #loginBox {
   padding: 10px;
@@ -54,7 +62,7 @@
 
 .listItem {
   font-size: 30px;
-  font-family: 'Poiret One', cursive; }
+  font-family: 'Cabin', cursive; }
 
 .complete {
   text-decoration: line-through;

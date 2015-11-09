@@ -9,6 +9,14 @@ var page = {
   initStyling:function(){
     page.getItem();
 
+	  $('#slideshow').cycle({
+	    fx: 'fade',
+	    pager: '#smallnav',
+	    pause:   1,
+	    speed: 2500,
+	    timeout:  5500
+	  });
+
   },
   initEvents:function(){
 

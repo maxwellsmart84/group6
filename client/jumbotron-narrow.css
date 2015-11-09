@@ -2,6 +2,19 @@
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+
+}
+
+
+#slideshow, img.bgM {
+  min-height: 100%;
+  min-width: 1024px;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index:-9999;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -35,6 +48,9 @@ body {
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
+    box-shadow: inset .5px .5px 62px 5px rgb(255, 255, 255), 0px 28px 100px 16px rgb(255, 255, 255);
+    border-radius: 2%;
+    color:white;
   }
 }
 .container-narrow > hr {
@@ -45,11 +61,31 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
+  background-color: transparent;
+  border-radius: 3%;
+  color:white;
 }
 .jumbotron .btn {
   padding: 14px 24px;
   font-size: 21px;
 }
+ .jumbotron > h1 {
+   font-family: "Cabin", sans-serif;
+ }
+
+ #returningUser {
+   color:transparent;
+   /*//props to  Riccardo Tartaglia on codepen for this glow effect*/
+   text-shadow:
+   0 0 2px rgba(255,255,255,1),
+   0 0 10px rgba(255,255,255,1),
+   0 0 20px rgba(255,255,255,1),
+   0 0 30px rgba(255,255,255,1),
+   0 0 40px #b6b3cb,
+   0 0 70px #b6b3cb,
+   0 0 80px #b6b3cb,
+   0 0 100px #b6b3cb,
+ }
 
 /* Supporting marketing content */
 .marketing {
