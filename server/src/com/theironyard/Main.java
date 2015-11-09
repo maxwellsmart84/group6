@@ -89,6 +89,14 @@ public class Main {
         stmt.setBoolean(3, b.isDone);
         stmt.execute();
     }
+    static void editBucket(Connection conn, int id, String text) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET text =  ? WHERE id = ?)"); //causes identity to auto incremnent
+        //Bucket b = new Bucket();
+        stmt.setInt(2, id);
+        stmt.setString(1, text);
+        //stmt.setBoolean(3, b.isDone);
+        stmt.execute();
+    }
     static void insertUserlessBucket (Connection conn, String text) throws SQLException{
         Random random = new Random();
         int randInt = 100000 + (int)(Math.random()* 100000);
@@ -305,7 +313,6 @@ public class Main {
                     int idNum = Integer.valueOf(id);
                         setDone(conn, idNum);
                     } catch (Exception e) {
-
                     }
                     //String id = request2.queryParams("id");
                     //int idNum = selectUser(conn, username).id;
@@ -318,7 +325,7 @@ public class Main {
         Spark.post(
                 "/insertUserlessBucket",
                 ((request2, response2) -> {
-                    String text = request2.queryParams("newTitle");
+                    String text = request2.queryParams("dreamBox");
                     insertUserlessBucket(conn, text);
                     return "";
                 })
@@ -363,6 +370,20 @@ public class Main {
                     return "";
                 })
         );
+    /*    Spark.post(
+                "/editBucket",
+                ((request2, response2) -> {
+                    String newText = request2.queryParams("text");
+                    String id = request2.queryParams("id");
+                    try {
+                    int idNum = Integer.valueOf(id);
+                        editBucket(conn,newText, id );
+                    } catch (Exception e) {
+
+                    }
+
+                })
+        );*/
 
         Spark.get(
                 "/removeBucket",
