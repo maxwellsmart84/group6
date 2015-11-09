@@ -1,6 +1,6 @@
 
 var page = {
-    url: "https://tiny-tiny.herokuapp.com/collections/bucketList",
+    // url: "https://tiny-tiny.herokuapp.com/collections/bucketList",
     // url: '/globalBucket',
   init:function(){
     page.initStyling();
@@ -156,9 +156,6 @@ getItem: function() {
         }
       });
     },
-
-// var rand = myArray[Math.round(Math.random() * (myArray.length - 1))];
-
 
 createItem: function(newItem) {
   $.ajax({
