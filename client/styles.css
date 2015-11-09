@@ -29,6 +29,9 @@
     text-align: center;
     letter-spacing: 33px; }
 
+#loginSubmit {
+  margin-left: 39%; }
+
 #loginBox {
   padding: 10px;
   background-color: white;
