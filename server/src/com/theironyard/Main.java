@@ -306,6 +306,7 @@ public class Main {
         Spark.post(
                 "/isDone",
                 ((request2, response2) -> {
+<<<<<<< HEAD
                     //Session session = request2.session();
                     //String bucketText = request2.queryParams("bucketText");
                     String id = request2.queryParams("id");
@@ -318,6 +319,13 @@ public class Main {
                     //int idNum = selectUser(conn, username).id;
                     //Bucket bucket = selectBucket(conn, idNum);
                     //setDone(conn, bucketText);
+=======
+                    Session session = request2.session();
+                    String username = session.attribute("username");
+                    int id = selectUser(conn, username).id;
+                    Bucket bucket = selectBucket(conn, id);
+                    setDone(conn, bucket.id);
+>>>>>>> a87300c66a94fcdfc821cb553ea372a5127e7d11
                     return "";
                 })
         );
@@ -367,6 +375,10 @@ public class Main {
                     String text = request.queryParams("newTitle");
                     int idNum = user.id;
                     insertBucket(conn, idNum, text);
+<<<<<<< HEAD
+=======
+                  //  selectUserBuckets(conn, idNum);
+>>>>>>> a87300c66a94fcdfc821cb553ea372a5127e7d11
                     return "";
                 })
         );

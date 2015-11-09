@@ -113,6 +113,13 @@ var page = {
 
 getItem: function() {
     $.ajax({
+      // url: '/getBucket',
+      url: page.url,
+      type: 'GET',
+      success: function (bucket) {
+        // var itemData = JSON.parse(data);
+        var template = _.template(templates.bucket);
+
       url: "/userBucket",
       type: 'GET',
       success: function (bucket) {
@@ -128,7 +135,7 @@ getItem: function() {
         $('section').html(bucketItm);
 
       },
-      failure: function (err) {
+      error: function (err) {
         console.log("DID NOT GET ITEM", err);
       }
     });
@@ -166,7 +173,7 @@ createItem: function(newItem) {
       console.log("SUCCESSFULLY CREATED NEW BUCKET", data);
       page.getItem();
     },
-    failure: function (err) {
+    error: function (err) {
       console.log("DID NOT CREATE NEW BUCKET", err);
     }
   });
@@ -183,7 +190,7 @@ createItem: function(newItem) {
         console.log("Delete success!", data);
         page.getItem();
       },
-      failure: function (err) {
+      error: function (err) {
         console.log("delete failed",err);
       }
     });
@@ -199,8 +206,8 @@ createItem: function(newItem) {
 
       },
 
-      failure: function(err) {
-        console.log("update failure", err);
+      error: function(err) {
+        console.log("update Error", err);
       }
     });
   }
