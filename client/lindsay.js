@@ -15,6 +15,7 @@ var page = {
   // EDIT Bucket Item-------------
   $('section').on('click', '.listItem', function (event){
   event.preventDefault();
+  console.log(event.target);
   $(this).closest('.listItem').replaceWith('<input type="text" class="updateListItem" placeholder="Edit Bucket List Item" name="updateListItem"</input>');
   $('.updateListItem').parent().siblings('.editItem').addClass('show');
   });
@@ -30,11 +31,32 @@ var page = {
 
   });
 
+  $('.container').on('click', ".completeItem", function (event){
+    event.preventDefault();
+    var parentElement = $(this).parent().parent().parent();
+    var itemID = parentElement.data("itemid");
+    console.log(itemID);
+    $.ajax({
+      url: "/isDone",
+      type: 'POST',
+      data: itemID,
+      success: function(data) {
+        console.log("update success!", data);
+      },
+
+      failure: function(err) {
+        console.log("update failure", err);
+      }
+    });
+
+  });
+
   //CREATE NEW BUCKET ITEM------------
   $('.createItem').on('submit', function(event){
       event.preventDefault();
         var newItem = {
           newTitle: $(this).find('input[name="newTitle"]').val(),
+          isDone: false,
 
         };
       page.createItem(newItem);
@@ -116,7 +138,7 @@ createItem: function(newItem) {
   updateItem: function(itemId, editedItem) {
     $.ajax({
       url: "/userBucket",
-      type: 'POST',
+      type: 'PUT',
       data: "done=true",
       success: function(data) {
         console.log("update success!", data);
