@@ -59,7 +59,7 @@ var page = {
         type: 'GET',
         success: function (bucket2) {
           console.log(bucket2);
-          var bucketData2= JSON.parse(bucket);
+          var bucketData2= JSON.parse(bucket2);
           console.log(bucketData2);
           var template = _.template(templates.bucket);
           var bucketItm = "";

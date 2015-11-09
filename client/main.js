@@ -16,6 +16,7 @@ var page= {
     page.loginEvent();
     page.videBackground();
     page.newUserEvent();
+    page.dreamBoxSubmit();
 
 
   },
@@ -52,5 +53,27 @@ var page= {
       $("#loginBox").addClass("hidden-class");
       $("#signUpBox").removeClass("hidden-class");
     });
-  }
+  },
+
+  dreamBoxSubmit: function (){
+    $('body').on("keypress", "#dreamBoxInput", function(event){
+      if (event.which === 13){
+        event.preventDefault();
+        var newItem = $('#dreamBoxInput').val();
+        $.ajax({
+          url: "/insertUserListBucket",
+          data: newItem,
+          type: 'POST',
+          success: function (data) {
+            console.log("SUCCESSFULLY CREATED NEW BUCKET", data);
+          },
+          failure: function (err) {
+            console.log("DID NOT CREATE NEW BUCKET", err);
+          }
+        });
+        $('#dreamBoxInput').val('');
+        }
+      });
+    },
+
 }
