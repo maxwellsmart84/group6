@@ -51,19 +51,19 @@ var page = {
 
   });
 
-  $('.container').on('click', "#getRandom", function(event){
+  $('body').on('click', "#getRandom", function(event){
       console.log(event.target);
       event.preventDefault();
       $.ajax({
         url: "/randomBucket",
         type: 'GET',
-        success: function (bucket) {
-          console.log(bucket);
-          bucketData= JSON.parse(bucket);
-          console.log(bucketData);
+        success: function (bucket2) {
+          console.log(bucket2);
+          var bucketData2= JSON.parse(bucket);
+          console.log(bucketData2);
           var template = _.template(templates.bucket);
           var bucketItm = "";
-          bucketData.forEach(function(item, idx, arr){
+          bucketData2.forEach(function(item, idx, arr){
             bucketItm += template(item);
           });
           console.log('bucketItm is...', bucketItm);
