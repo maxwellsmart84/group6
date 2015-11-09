@@ -143,10 +143,16 @@ public class Main {
     }
 
     public static void setDone(Connection conn, int id) throws SQLException{
-        PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = NOT isDone WHERE id = ?");
-        //PreparedStatement stmt2 = conn.prepareStatement("UPDATE buckets SET")
-        stmt.setInt(1, id);
+        Bucket bucket = selectBucket(conn, id);
+        if (bucket.isDone=false) {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = true WHERE id = ?");
+            stmt.setInt(1, id);
+            stmt.execute();
+        }  PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = false WHERE id =?");
+        stmt.setInt(1,id);
         stmt.execute();
+        //PreparedStatement stmt2 = conn.prepareStatement("UPDATE buckets SET")
+
     }
 
     //pulls all buckets posted by a specific user
