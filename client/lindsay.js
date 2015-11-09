@@ -115,11 +115,10 @@ createItem: function(newItem) {
     });
   },
   updateItem: function(itemId, editedItem) {
-    var isTrue= "{done:true}";
     $.ajax({
       url: "/userBucket",
       type: 'PUT',
-      data: isTrue,
+      data: stringSend,
       success: function(data) {
         console.log("update success!", data);
         page.getItem();

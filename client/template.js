@@ -9,7 +9,7 @@ templates.bucket=[
 '</i>',
 '</a>',
 '</span>',
-'<h4 class="listItem"><%= text %></h4>',
+'<h4 name= "bucketText" class="listItem"><%= text %></h4>',
 '<span>',
 '<a class="deleteItem" href="#">',
 '<i class="fa fa-trash-o fa-2x">',
