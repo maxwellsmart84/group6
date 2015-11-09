@@ -1,7 +1,9 @@
 #loginClick {
   float: right;
   position: relative;
-  margin-right: 5%; }
+  margin-right: 5%;
+  color: transparent;
+  text-shadow: 0 0 2px white, 0 0 10px white, 0 0 20px white, 0 0 30px white, 0 0 40px #fbf6e1, 0 0 70px #fbf6e1, 0 0 80px #fbf6e1, 0 0 100px #fbf6e1; }
 
 #frontPage {
   position: absolute;

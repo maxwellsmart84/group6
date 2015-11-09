@@ -27,7 +27,7 @@ var page= {
     // $('#frontPage').vide('DreamBig.mp4');
     $('#frontPage').vide('DreamBig.mp4', {
         volume: 0,
-        playbackRate: .4,
+        playbackRate: .3,
         muted: true,
         loop: true,
         autoplay: true,
