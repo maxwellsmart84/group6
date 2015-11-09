@@ -4,7 +4,7 @@ templates.bucket=[
 '<article data-itemid="<%= id %>">',
 '<div class="bucketLineItem">',
 '<span>',
-'<a class="completeItem" href="#">',
+'<a class="completeItem" name"isDone" href="#">',
 '<i class="fa fa-check fa-2x">',
 '</i>',
 '</a>',
