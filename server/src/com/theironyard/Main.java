@@ -82,9 +82,11 @@ public class Main {
 
     //adds row for new bucket in buckets table
     static void insertBucket(Connection conn, int id, String text) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ? , ?, false)"); //causes identity to auto incremnent
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO buckets VALUES (NULL, ? , ?, ?)"); //causes identity to auto incremnent
+        Bucket b = new Bucket();
         stmt.setInt(1, id);
         stmt.setString(2, text);
+        stmt.setBoolean(3, b.isDone);
         stmt.execute();
     }
     static void insertUserlessBucket (Connection conn, String text) throws SQLException{
@@ -113,9 +115,10 @@ public class Main {
     }
 
     //select random bucket
-    public static Bucket selectRandomBucket(Connection conn) throws SQLException{
+    public static ArrayList<Bucket> selectRandomBucket(Connection conn) throws SQLException{
         Statement stmt = conn.createStatement();
         Bucket bucket = null;
+        ArrayList<Bucket> buckets = new ArrayList();
 
        ResultSet results = stmt.executeQuery("SELECT * FROM buckets ORDER BY RAND() LIMIT 1");
         if (results.next()){
@@ -123,8 +126,9 @@ public class Main {
             bucket.isDone = false;
             bucket.id = results.getInt("id");
             bucket.text = results.getString("text");
+            buckets.add(bucket);
         }
-        return bucket;
+        return buckets;
     }
 
     //select all buckets for globalBucket
@@ -144,7 +148,7 @@ public class Main {
 
     public static void setDone(Connection conn, int id) throws SQLException{
         Bucket bucket = selectBucket(conn, id);
-        if (bucket.isDone=false) {
+        if (!bucket.isDone) {
             PreparedStatement stmt = conn.prepareStatement("UPDATE buckets SET isDone = true WHERE id = ?");
             stmt.setInt(1, id);
             stmt.execute();
@@ -152,7 +156,6 @@ public class Main {
         stmt.setInt(1,id);
         stmt.execute();
         //PreparedStatement stmt2 = conn.prepareStatement("UPDATE buckets SET")
-
     }
 
     //pulls all buckets posted by a specific user
@@ -312,8 +315,6 @@ public class Main {
                 })
         );
 
-
-
         Spark.post(
                 "/insertUserlessBucket",
                 ((request2, response2) -> {
@@ -356,11 +357,9 @@ public class Main {
                     Session session = request.session();
                     String username = session.attribute("username");
                     User user = selectUser(conn, username);
-                    //String id = request.queryParams("id");
                     String text = request.queryParams("newTitle");
                     int idNum = user.id;
                     insertBucket(conn, idNum, text);
-                  //  selectUserBuckets(conn, idNum);
                     return "";
                 })
         );
@@ -381,8 +380,8 @@ public class Main {
                 "/randomBucket",
                 ((request1, response1) -> {
                     JsonSerializer serializer = new JsonSerializer();
-                    Bucket bucket = selectRandomBucket(conn);
-                        String json = serializer.serialize(bucket);
+                    ArrayList<Bucket> buckets = selectRandomBucket(conn);
+                        String json = serializer.serialize(buckets);
                         return json;
                 })
         );

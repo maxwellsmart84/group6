@@ -6,7 +6,7 @@ package com.theironyard;
 public class Bucket {
     int id;
     String text;
-    boolean isDone;
+    boolean isDone = false;
 
     public int getId() {
         return id;
