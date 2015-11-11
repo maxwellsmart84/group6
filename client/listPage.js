@@ -113,14 +113,8 @@ var page = {
 
 getItem: function() {
     $.ajax({
-      // url: '/getBucket',
-      url: page.url,
-      type: 'GET',
-      success: function (bucket) {
-        // var itemData = JSON.parse(data);
-        var template = _.template(templates.bucket);
-
-      url: "/userBucket",
+      url: '/globalBucket',
+      // url: page.url,
       type: 'GET',
       success: function (bucket) {
         console.log(bucket);
@@ -184,7 +178,7 @@ createItem: function(newItem) {
 
   deleteItem: function(itemId) {
     $.ajax({
-      url: page.url + "/" + itemId,
+      url: 'removeBucket' + "/" + itemId,
       type: 'DELETE',
       success: function (data) {
         console.log("Delete success!", data);
