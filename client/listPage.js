@@ -1,6 +1,6 @@
 
 var page = {
-    url: "https://tiny-tiny.herokuapp.com/collections/bucketList",
+    // url: "https://tiny-tiny.herokuapp.com/collections/bucketList",
     // url: '/globalBucket',
   init:function(){
     page.initStyling();
@@ -113,7 +113,8 @@ var page = {
 
 getItem: function() {
     $.ajax({
-      url: "/userBucket",
+      url: '/globalBucket',
+      // url: page.url,
       type: 'GET',
       success: function (bucket) {
         console.log(bucket);
@@ -128,7 +129,7 @@ getItem: function() {
         $('section').html(bucketItm);
 
       },
-      failure: function (err) {
+      error: function (err) {
         console.log("DID NOT GET ITEM", err);
       }
     });
@@ -157,9 +158,6 @@ getItem: function() {
       });
     },
 
-// var rand = myArray[Math.round(Math.random() * (myArray.length - 1))];
-
-
 createItem: function(newItem) {
   $.ajax({
     url: "/insertBucket",
@@ -169,7 +167,7 @@ createItem: function(newItem) {
       console.log("SUCCESSFULLY CREATED NEW BUCKET", data);
       page.getItem();
     },
-    failure: function (err) {
+    error: function (err) {
       console.log("DID NOT CREATE NEW BUCKET", err);
     }
   });
@@ -180,13 +178,13 @@ createItem: function(newItem) {
 
   deleteItem: function(itemId) {
     $.ajax({
-      url: page.url + "/" + itemId,
+      url: 'removeBucket' + "/" + itemId,
       type: 'DELETE',
       success: function (data) {
         console.log("Delete success!", data);
         page.getItem();
       },
-      failure: function (err) {
+      error: function (err) {
         console.log("delete failed",err);
       }
     });
@@ -202,8 +200,8 @@ createItem: function(newItem) {
 
       },
 
-      failure: function(err) {
-        console.log("update failure", err);
+      error: function(err) {
+        console.log("update Error", err);
       }
     });
   }

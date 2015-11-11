@@ -33,8 +33,13 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/theironyard/Main.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="1.2968036">
               <caret line="371" column="10" selection-start-line="371" selection-start-column="10" selection-end-line="371" selection-end-column="10" />
+=======
+            <state vertical-scroll-proportion="0.48723897">
+              <caret line="291" column="59" selection-start-line="291" selection-start-column="59" selection-end-line="291" selection-end-column="59" />
+>>>>>>> a87300c66a94fcdfc821cb553ea372a5127e7d11
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#createTables#0;class#Main#0" expanded="false" />
@@ -50,6 +55,19 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+=======
+      <file leaf-file-name="main.mv.db" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.mv.db">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+>>>>>>> a87300c66a94fcdfc821cb553ea372a5127e7d11
       <file leaf-file-name="MainTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/com/theironyard/MainTest.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -544,6 +562,7 @@
       <option name="project" value="LOCAL" />
       <updated>1447024269244</updated>
     </task>
+<<<<<<< HEAD
     <task id="LOCAL-00015" summary="rebuilt /isDone">
       <created>1447027433981</created>
       <option name="number" value="00015" />
@@ -581,6 +600,9 @@
       <updated>1447035384391</updated>
     </task>
     <option name="localTasksCounter" value="21" />
+=======
+    <option name="localTasksCounter" value="15" />
+>>>>>>> a87300c66a94fcdfc821cb553ea372a5127e7d11
     <servers />
   </component>
   <component name="TodoView">
@@ -670,12 +692,16 @@
     <MESSAGE value="rebuild jar&#10;" />
     <MESSAGE value="edit insertBucket" />
     <MESSAGE value="&#10;lafhjkds" />
+<<<<<<< HEAD
     <MESSAGE value="rebuilt /isDone" />
     <MESSAGE value="switched input type for isDone to string" />
     <MESSAGE value="test" />
     <MESSAGE value="rebuilt isDone ver.1.3" />
     <MESSAGE value="updated randomBucket to return an ArrayList of bucket" />
     <option name="LAST_COMMIT_MESSAGE" value="updated randomBucket to return an ArrayList of bucket" />
+=======
+    <option name="LAST_COMMIT_MESSAGE" value="&#10;lafhjkds" />
+>>>>>>> a87300c66a94fcdfc821cb553ea372a5127e7d11
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1263,7 +1289,11 @@
     <entry file="file://$PROJECT_DIR$/src/test/com/theironyard/MainTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+<<<<<<< HEAD
           <caret line="88" column="7" selection-start-line="88" selection-start-column="7" selection-end-line="88" selection-end-column="7" />
+=======
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+>>>>>>> a87300c66a94fcdfc821cb553ea372a5127e7d11
           <folding />
         </state>
       </provider>
@@ -1278,8 +1308,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/theironyard/Main.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="1.2968036">
           <caret line="371" column="10" selection-start-line="371" selection-start-column="10" selection-end-line="371" selection-end-column="10" />
+=======
+        <state vertical-scroll-proportion="0.48723897">
+          <caret line="291" column="59" selection-start-line="291" selection-start-column="59" selection-end-line="291" selection-end-column="59" />
+>>>>>>> a87300c66a94fcdfc821cb553ea372a5127e7d11
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#createTables#0;class#Main#0" expanded="false" />
