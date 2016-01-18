@@ -17,8 +17,6 @@ var page= {
     page.videBackground();
     page.newUserEvent();
     page.dreamBoxSubmit();
-
-
   },
 
 
@@ -42,7 +40,7 @@ var page= {
     $("#frontPage").on("click", "#loginClick", function(event){
       event.preventDefault();
       $("#loginBox").removeClass("hidden-class");
-      $("#signUpBox").addClass("hidden-class")
+      $("#signUpBox").addClass("hidden-class");
     });
   },
 
